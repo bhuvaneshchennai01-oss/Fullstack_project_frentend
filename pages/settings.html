@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings – FinSmart</title>
+    <meta name="description" content="Manage your FinSmart account settings, theme, and preferences.">
+    <link rel="stylesheet" href="../style/variables.css">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/components.css">
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/pages.css">
+    <link rel="stylesheet" href="../style/animations.css">
+    <link rel="stylesheet" href="../style/responsive.css">
+</head>
+
+<body>
+    <div class="page-loader" id="pageLoader">
+        <div class="spinner-xl"></div>
+    </div>
+    <div class="app-shell">
+        <div class="sidebar-overlay"></div>
+
+        <aside class="sidebar" aria-label="Sidebar navigation">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">F</div>
+                    <span class="sidebar-logo-text">FinSmart</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Menu</div>
+                    <a href="dashboard.html" class="nav-link"><span class="nav-icon" data-icon="home"></span>
+                        Dashboard</a>
+                    <a href="persons.html" class="nav-link"><span class="nav-icon" data-icon="user"></span>
+                        Borrowers</a>
+                    <a href="reports.html" class="nav-link"><span class="nav-icon" data-icon="chart"></span> Reports</a>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">System</div>
+                    <a href="settings.html" class="nav-link active" aria-current="page"><span class="nav-icon"
+                            data-icon="settings"></span>
+                        Settings</a>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="sidebar-toggle" aria-label="Toggle sidebar" data-icon="menu"
+                        style="display:none;"></button>
+                    <div class="mobile-logo" style="display:none;">
+                        <div
+                            style="background:var(--primary-500); color:white; width:32px; height:32px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1rem;">
+                            F</div>
+                        <span style="font-weight:800; font-size:1rem; color:var(--text-primary);">FinSmart</span>
+                    </div>
+                    <h1 class="top-bar-title">Settings</h1>
+                </div>
+                <div class="top-bar-right">
+                    <a href="add-person.html" class="btn btn-primary btn-sm ripple">
+                        <span data-icon="plus"></span> Add Borrower
+                    </a>
+
+                    <div class="search-bar global-search">
+                        <span class="search-icon" data-icon="search"></span>
+                        <input type="text" id="globalSearchInput" placeholder="Search borrowers... (Ctrl+K)"
+                            aria-label="Search">
+                        <div class="search-results-dropdown" id="globalSearchResults"></div>
+                    </div>
+
+                    <button class="btn btn-icon btn-ghost theme-toggle-btn" aria-label="Toggle theme"
+                        data-tooltip="Toggle Dark/Light Mode">
+                        <span data-icon="moon"></span>
+                    </button>
+
+                    <!-- Notification Center -->
+                    <div class="notification-center dropdown" id="notificationCenter">
+                        <button class="btn btn-icon btn-ghost dropdown-toggle" aria-label="Notifications"
+                            data-tooltip="Notifications">
+                            <span data-icon="bell"></span>
+                            <span class="notification-badge" id="unreadCount" style="display:none;"></span>
+                        </button>
+                        <div class="dropdown-menu notification-dropdown">
+                            <div class="notification-header">
+                                <h3>Notifications</h3>
+                                <button class="btn-link" id="markAllRead">Mark all read</button>
+                            </div>
+                            <div class="notification-list" id="notificationList">
+                                <div class="notification-empty">No new alerts.</div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="reports.html">View all activity</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <!-- User Profile Dropdown -->
+                    <div class="user-profile-shortcut dropdown" id="userProfileDropdown">
+                        <button class="btn btn-icon btn-ghost dropdown-toggle"
+                            style="padding:0; width:36px; height:36px; border-radius:var(--radius-full); background:var(--surface-3); border:1px solid var(--border-light); overflow:hidden;">
+                            <div id="topBarAvatar" class="avatar avatar-sm"
+                                style="width:100%; height:100%; border-radius:0;">U</div>
+                        </button>
+                        <div class="dropdown-menu user-dropdown">
+                            <div class="user-dropdown-header">
+                                <p class="font-semibold" id="dropdownUserName">User</p>
+                                <p id="dropdownUserEmail"
+                                    style="font-size:var(--text-xs); color:var(--text-tertiary); margin:0;">
+                                    email@example.com</p>
+                            </div>
+                            <div style="padding:var(--space-1);">
+                                <a href="settings.html" class="user-dropdown-item">
+                                    <span data-icon="settings"></span> Settings
+                                </a>
+                                <a href="reports.html" class="user-dropdown-item">
+                                    <span data-icon="chart"></span> Analytics
+                                </a>
+                                <div style="height:1px; background:var(--border-light); margin:var(--space-1) 0;"></div>
+                                <button class="user-dropdown-item danger" onclick="logout()"
+                                    style="width:100%; border:none; background:none; cursor:pointer; text-align:left;">
+                                    <span data-icon="arrowLeft"></span> Sign Out
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="page-content page-enter" id="main">
+                <!-- Breadcrumbs -->
+                <ul class="breadcrumbs">
+                    <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                    <li class="breadcrumb-item active">Settings</li>
+                </ul>
+                <div class="page-header" style="margin-bottom:var(--space-6);">
+                    <div class="page-header-left">
+                        <h2 class="page-title">Account Settings</h2>
+                        <p class="page-subtitle">Manage your profile, appearance, and preferences</p>
+                    </div>
+                </div>
+
+                <div class="settings-layout">
+                    <!-- Sidebar -->
+                    <nav class="settings-nav" id="settingsNav">
+                        <button class="settings-nav-item active" data-panel="panelProfile">Profile</button>
+                        <button class="settings-nav-item" data-panel="panelAppearance">Appearance</button>
+                        <button class="settings-nav-item" data-panel="panelPreferences">Preferences</button>
+                        <button class="settings-nav-item" data-panel="panelSecurity">Security</button>
+                        <button class="settings-nav-item" data-panel="panelDanger">Danger</button>
+                    </nav>
+
+                    <!-- Main Content -->
+                    <div class="settings-content">
+                        <!-- Profile -->
+                        <div class="settings-group active" id="groupProfile">
+                            <button class="settings-mobile-header" data-panel="panelProfile">
+                                <span>Profile Information</span>
+                                <span class="chevron" data-icon="chevronDown"></span>
+                            </button>
+                            <div class="settings-panel active" id="panelProfile">
+                                <div class="settings-card">
+                                    <div class="settings-section-header">
+                                        <h3>Profile</h3>
+                                        <p>Manage your account identity and business details.</p>
+                                    </div>
+                                    
+                                    <div class="settings-form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label" for="settingsName">Full Name</label>
+                                            <input type="text" id="settingsName" class="form-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" for="settingsEmail">Email Address</label>
+                                            <input type="email" id="settingsEmail" class="form-input" disabled>
+                                        </div>
+                                        <div class="form-group settings-form-full">
+                                            <label class="form-label" for="settingsBusiness">Business Name</label>
+                                            <input type="text" id="settingsBusiness" class="form-input">
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-primary ripple" id="saveProfile">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Appearance -->
+                        <div class="settings-group" id="groupAppearance">
+                            <button class="settings-mobile-header" data-panel="panelAppearance">
+                                <span>Appearance</span>
+                                <span class="chevron" data-icon="chevronDown"></span>
+                            </button>
+                            <div class="settings-panel" id="panelAppearance">
+                                <div class="settings-card">
+                                    <div class="settings-section-header">
+                                        <h3>Appearance</h3>
+                                        <p>Choose your preferred interface theme.</p>
+                                    </div>
+
+                                    <div class="theme-picker">
+                                        <label class="theme-option" id="themeOptionLight">
+                                            <input type="radio" name="ui_theme" value="light">
+                                            <div class="theme-preview">
+                                                <div class="theme-preview-inner" style="background:#fff; border:1px solid #eee;"></div>
+                                                <p class="theme-label">Light Mode</p>
+                                            </div>
+                                        </label>
+                                        <label class="theme-option" id="themeOptionDark">
+                                            <input type="radio" name="ui_theme" value="dark">
+                                            <div class="theme-preview">
+                                                <div class="theme-preview-inner" style="background:#1a1a1a;"></div>
+                                                <p class="theme-label">Dark Mode</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preferences -->
+                        <div class="settings-group" id="groupPreferences">
+                            <button class="settings-mobile-header" data-panel="panelPreferences">
+                                <span>Preferences</span>
+                                <span class="chevron" data-icon="chevronDown"></span>
+                            </button>
+                            <div class="settings-panel" id="panelPreferences">
+                                <div class="settings-card">
+                                    <div class="settings-section-header">
+                                        <h3>Preferences</h3>
+                                        <p>Global lending rules and system defaults.</p>
+                                    </div>
+
+                                    <div class="settings-form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label" for="prefCurrency">Currency</label>
+                                            <select id="prefCurrency" class="form-select">
+                                                <option value="INR">Indian Rupee (INR)</option>
+                                               
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" for="prefInterest">Interest Rate (per 100)</label>
+                                            <input type="number" id="prefInterest" class="form-input" min="0" step="0.5">
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary ripple" id="savePreferences">
+                                        Update Preferences
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security -->
+                        <div class="settings-group" id="groupSecurity">
+                            <button class="settings-mobile-header" data-panel="panelSecurity">
+                                <span>Security</span>
+                                <span class="chevron" data-icon="chevronDown"></span>
+                            </button>
+                            <div class="settings-panel" id="panelSecurity">
+                                <div class="settings-card">
+                                    <div class="settings-section-header">
+                                        <h3>Security</h3>
+                                        <p>Manage your account authentication settings.</p>
+                                    </div>
+
+                                    <div style="max-width: 400px;">
+                                        <div class="form-group">
+                                            <label class="form-label" for="currentPassword">Current Password</label>
+                                            <input type="password" id="currentPassword" class="form-input">
+                                             <button type="button" class="password-toggle" data-icon="eye"
+                            aria-label="Toggle password visibility"></button>
+                                        </div>
+                                        <div class="form-group" style="margin-top: var(--space-4);">
+                                            <label class="form-label" for="newPassword">New Password</label>
+                                            <input type="password" id="newPassword" class="form-input">
+                                             <button type="button" class="password-toggle" data-icon="eye"
+                            aria-label="Toggle password visibility"></button>
+                                        </div>
+                                        <div class="form-group" style="margin-top: var(--space-4); margin-bottom: var(--space-6);">
+                                            <label class="form-label" for="confirmNewPassword">Confirm Password</label>
+                                            <input type="password" id="confirmNewPassword" class="form-input">
+                                             <button type="button" class="password-toggle" data-icon="eye"
+                            aria-label="Toggle password visibility"></button>
+                                        </div>
+                                        <button class="btn btn-primary ripple" id="btnChangePassword" style="width: 100%;">
+                                            Update Password
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Danger Zone -->
+                        <div class="settings-group" id="groupDanger">
+                            <button class="settings-mobile-header" data-panel="panelDanger">
+                                <span style="color: var(--danger-600);">Danger Area</span>
+                                <span class="chevron" data-icon="chevronDown"></span>
+                            </button>
+                            <div class="settings-panel" id="panelDanger">
+                                <div class="settings-card" style="border-color: var(--danger-100);">
+                                    <div class="settings-section-header">
+                                        <h3 style="color: var(--danger-600);">Danger Area</h3>
+                                        <p>Irreversible actions for your account.</p>
+                                    </div>
+
+                                    <div class="settings-row">
+                                        <div class="settings-row-info">
+                                            <h4>Sign Out</h4>
+                                            <p>Log out of your current session.</p>
+                                        </div>
+                                        <button class="btn btn-secondary ripple" id="logoutBtn">Sign Out</button>
+                                    </div>
+
+                                    <div class="settings-row" style="border-bottom: none;">
+                                        <div class="settings-row-info">
+                                            <h4 style="color: var(--danger-600);">Delete Account Data</h4>
+                                            <p>This will erase all your local cache and records.</p>
+                                        </div>
+                                        <button class="btn btn-danger ripple" id="clearAllData">Delete All</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../script/app.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/settings.js"></script>
+</body>
+
+</html>

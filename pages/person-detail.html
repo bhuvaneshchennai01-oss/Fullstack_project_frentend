@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrower Detail – FinSmart</title>
+    <meta name="description" content="View borrower profile, loan stats, and payment history.">
+    <link rel="stylesheet" href="../style/variables.css">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/components.css">
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/pages.css">
+    <link rel="stylesheet" href="../style/animations.css">
+    <link rel="stylesheet" href="../style/responsive.css">
+</head>
+
+<body>
+    <div class="page-loader" id="pageLoader">
+        <div class="spinner-xl"></div>
+    </div>
+    <div class="app-shell">
+        <div class="sidebar-overlay"></div>
+
+        <aside class="sidebar" aria-label="Sidebar navigation">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">F</div>
+                    <span class="sidebar-logo-text">FinSmart</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Menu</div>
+                    <a href="dashboard.html" class="nav-link"><span class="nav-icon" data-icon="home"></span>
+                        Dashboard</a>
+                    <a href="persons.html" class="nav-link active"><span class="nav-icon" data-icon="user"></span>
+                        Borrowers</a>
+                    <a href="reports.html" class="nav-link"><span class="nav-icon" data-icon="chart"></span> Reports</a>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">System</div>
+                    <a href="settings.html" class="nav-link"><span class="nav-icon" data-icon="settings"></span>
+                        Settings</a>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="sidebar-toggle" aria-label="Toggle sidebar" data-icon="menu"
+                        style="display:none;"></button>
+                    <div class="mobile-logo" style="display:none;">
+                        <div
+                            style="background:var(--primary-500); color:white; width:32px; height:32px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1rem;">
+                            F</div>
+                        <span style="font-weight:800; font-size:1rem; color:var(--text-primary);">FinSmart</span>
+                    </div>
+                    <h1 class="top-bar-title">Borrower Detail</h1>
+                </div>
+                <div class="top-bar-right">
+                    <a href="add-person.html" class="btn btn-primary btn-sm ripple">
+                        <span data-icon="plus"></span> Add Borrower
+                    </a>
+
+                    <div class="search-bar global-search">
+                        <span class="search-icon" data-icon="search"></span>
+                        <input type="text" id="globalSearchInput" placeholder="Search borrowers... (Ctrl+K)"
+                            aria-label="Search">
+                        <div class="search-results-dropdown" id="globalSearchResults"></div>
+                    </div>
+
+                    <button class="btn btn-icon btn-ghost theme-toggle-btn" aria-label="Toggle theme"
+                        data-tooltip="Toggle Dark/Light Mode">
+                        <span data-icon="moon"></span>
+                    </button>
+
+                    <!-- Notification Center -->
+                    <div class="notification-center dropdown" id="notificationCenter">
+                        <button class="btn btn-icon btn-ghost dropdown-toggle" aria-label="Notifications"
+                            data-tooltip="Notifications">
+                            <span data-icon="bell"></span>
+                            <span class="notification-badge" id="unreadCount" style="display:none;"></span>
+                        </button>
+                        <div class="dropdown-menu notification-dropdown">
+                            <div class="notification-header">
+                                <h3>Notifications</h3>
+                                <button class="btn-link" id="markAllRead">Mark all read</button>
+                            </div>
+                            <div class="notification-list" id="notificationList">
+                                <div class="notification-empty">Loading alerts...</div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="reports.html">View all activity</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- User Profile Dropdown -->
+                    <div class="user-profile-shortcut dropdown" id="userProfileDropdown">
+                        <button class="btn btn-icon btn-ghost dropdown-toggle"
+                            style="padding:0; width:36px; height:36px; border-radius:var(--radius-full); background:var(--surface-3); border:1px solid var(--border-light); overflow:hidden;">
+                            <div id="topBarAvatar" class="avatar avatar-sm"
+                                style="width:100%; height:100%; border-radius:0;">U</div>
+                        </button>
+                        <div class="dropdown-menu user-dropdown">
+                            <div class="user-dropdown-header">
+                                <p class="font-semibold" id="dropdownUserName"
+                                    style="font-size:var(--text-sm); margin:0;">User</p>
+                                <p id="dropdownUserEmail"
+                                    style="font-size:var(--text-xs); color:var(--text-tertiary); margin:0;">
+                                    email@example.com</p>
+                            </div>
+                            <div style="padding:var(--space-1);">
+                                <a href="settings.html" class="user-dropdown-item">
+                                    <span data-icon="settings"></span> Settings
+                                </a>
+                                <a href="reports.html" class="user-dropdown-item">
+                                    <span data-icon="chart"></span> Analytics
+                                </a>
+                                <div style="height:1px; background:var(--border-light); margin:var(--space-1) 0;"></div>
+                                <button class="user-dropdown-item danger" onclick="logout()"
+                                    style="width:100%; border:none; background:none; cursor:pointer; text-align:left;">
+                                    <span data-icon="arrowLeft"></span> Sign Out
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="page-content page-enter" id="main">
+                <!-- Breadcrumbs -->
+                <ul class="breadcrumbs">
+                    <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="persons.html">Borrowers</a></li>
+                    <li class="breadcrumb-item active" id="breadcrumbName">Detail</li>
+                </ul>
+
+                <div class="page-header">
+                    <div style="display:flex;gap:var(--space-3);">
+                        <a href="persons.html" class="btn btn-secondary btn-sm">← Back</a>
+                        <button class="btn btn-danger btn-sm" id="deletePersonBtn">
+                            <span data-icon="trash" style="margin-right:4px;"></span> Delete Borrower
+                        </button>
+                    </div>
+                    <button class="btn btn-primary ripple" id="addPaymentBtn">+ Record Payment</button>
+                </div>
+
+                <!-- Profile -->
+                <div class="person-profile" id="personProfile">
+                    <div class="skeleton-avatar skeleton"></div>
+                    <div style="flex:1;">
+                        <div class="skeleton-title skeleton"></div>
+                        <div class="skeleton-text skeleton" style="width:40%;"></div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="person-detail-stats stagger-children">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-label">Principal</div>
+                            <div class="stat-icon" style="background:var(--primary-50);color:var(--primary-500);"
+                                data-icon="trending"></div>
+                        </div>
+                        <div class="stat-value skeleton skeleton-text" id="detailLoanAmount">--</div>
+                        <div class="stat-trend up">Initial Grant</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-label">Net Profit</div>
+                            <div class="stat-icon" style="background:var(--accent-50);color:var(--accent-500);"
+                                data-icon="pie"></div>
+                        </div>
+                        <div class="stat-value skeleton skeleton-text" id="detailInterest">--</div>
+                        <div class="stat-trend up">Yield Earned</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-label">Total Collected</div>
+                            <div class="stat-icon" style="background:var(--success-50);color:var(--success-500);"
+                                data-icon="check"></div>
+                        </div>
+                        <div class="stat-value skeleton skeleton-text" id="detailTotalPaid">--</div>
+                        <div class="stat-trend up">Recovery Status</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-label">Outstanding</div>
+                            <div class="stat-icon" style="background:var(--warning-50);color:var(--warning-500);"
+                                data-icon="alert"></div>
+                        </div>
+                        <div class="stat-value skeleton skeleton-text" id="detailOutstanding">--</div>
+                        <div class="stat-trend down">Pending Dues</div>
+                    </div>
+                </div>
+
+                <!-- Risk Assessment & Progress -->
+                <div class="person-detail-grid stagger-children" style="margin-bottom:var(--space-8);">
+                    <div class="card" id="repaymentProgress">
+                        <div
+                            style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-3);">
+                            <h4
+                                style="font-size:var(--text-sm);text-transform:uppercase;letter-spacing:0.05em;color:var(--text-tertiary);">
+                                Repayment Progress</h4>
+                            <span class="progress-label font-semibold"
+                                style="color:var(--primary-500);font-size:var(--text-xs);">0% repaid</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="card" id="riskAssessmentCard">
+                        <div
+                            style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-3);">
+                            <h4
+                                style="font-size:var(--text-sm);text-transform:uppercase;letter-spacing:0.05em;color:var(--text-tertiary);">
+                                Risk Assessment</h4>
+                            <div id="riskLevelBadge"></div>
+                        </div>
+                        <p id="riskReason" style="font-size:var(--text-sm);margin-bottom:0;"></p>
+                    </div>
+                </div>
+
+                <!-- Loan Details Grid -->
+                <div
+                    style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap:var(--space-6); margin-bottom:var(--space-8);">
+                    <div class="card">
+                        <h4
+                            style="font-size:var(--text-xs); color:var(--text-tertiary); text-transform:uppercase; margin-bottom:var(--space-2);">
+                            Duration</h4>
+                        <div style="font-weight:600;" id="displayDuration">--</div>
+                    </div>
+                    <div class="card">
+                        <h4
+                            style="font-size:var(--text-xs); color:var(--text-tertiary); text-transform:uppercase; margin-bottom:var(--space-2);">
+                            Start Date</h4>
+                        <div style="font-weight:600;" id="displayStartDate">--</div>
+                    </div>
+                    <div class="card">
+                        <h4
+                            style="font-size:var(--text-xs); color:var(--text-tertiary); text-transform:uppercase; margin-bottom:var(--space-2);">
+                            Next Payment</h4>
+                        <div style="font-weight:600; color:var(--primary-600);" id="displayNextPayment">--</div>
+                    </div>
+                    <div class="card">
+                        <h4
+                            style="font-size:var(--text-xs); color:var(--text-tertiary); text-transform:uppercase; margin-bottom:var(--space-2);">
+                            Payment / Cycle</h4>
+                        <div style="font-weight:700; color:var(--success-600);" id="displayPeriodInterest">--</div>
+                    </div>
+                </div>
+
+                <!-- Payment Timeline -->
+                <div class="card">
+                    <div
+                        style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-6);">
+                        <h3 style="font-size:var(--text-lg);font-weight:600;">Payment History</h3>
+                    </div>
+                    <div class="timeline" id="paymentTimeline">
+                        <!-- Rendered by person-detail.js -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal-backdrop" id="paymentModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Record Payment</h3>
+                <button class="btn btn-icon btn-ghost" onclick="Modal.close('paymentModal')"
+                    aria-label="Close modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="paymentForm" novalidate>
+                    <div class="form-group" style="margin-bottom:var(--space-5);">
+                        <label class="form-label" for="payAmount">Amount (₹) <span class="required">*</span></label>
+                        <input type="number" id="payAmount" class="form-input" placeholder="e.g., 5000" required
+                            min="1">
+                    </div>
+                    <div class="form-group" style="margin-bottom:var(--space-5);">
+                        <label class="form-label" for="payDate">Date <span class="required">*</span></label>
+                        <input type="date" id="payDate" class="form-input" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom:var(--space-5);">
+                        <label class="form-label" for="payType">Payment Type</label>
+                        <select id="payType" class="form-select">
+                            <option value="EMI">EMI Payment</option>
+                            <option value="partial">Partial Repayment</option>
+                            <option value="full">Full Settlement</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="payNote">Note (optional)</label>
+                        <input type="text" id="payNote" class="form-input" placeholder="e.g., Monthly EMI">
+                    </div>
+                    <div style="display:flex;gap:var(--space-3);margin-top:var(--space-8);">
+                        <button type="submit" class="btn btn-primary ripple" style="flex:1;">Save Payment</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick="Modal.close('paymentModal')">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Borrower Modal -->
+    <div class="modal-backdrop" id="editPersonModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Edit Borrower</h3>
+                <button class="btn btn-icon btn-ghost" onclick="Modal.close('editPersonModal')"
+                    aria-label="Close modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="editPersonForm">
+                    <div
+                        style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap:var(--space-4); margin-bottom:var(--space-4);">
+                        <div class="form-group">
+                            <label class="form-label" for="editName">Name</label>
+                            <input type="text" id="editName" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="editPhone">Phone</label>
+                            <input type="text" id="editPhone" class="form-input" required>
+                        </div>
+                    </div>
+                    <div
+                        style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap:var(--space-4); margin-bottom:var(--space-4);">
+                        <div class="form-group">
+                            <label class="form-label" for="editEmail">Email</label>
+                            <input type="email" id="editEmail" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="editLoanAmount">Loan Amount (₹)</label>
+                            <input type="number" id="editLoanAmount" class="form-input" required>
+                        </div>
+                    </div>
+                    <div
+                        style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap:var(--space-4); margin-bottom:var(--space-4);">
+                        <div class="form-group">
+                            <label class="form-label" for="editInterestAmount">Interest (₹ per 100)</label>
+                            <input type="number" id="editInterestAmount" class="form-input" required step="0.1">
+                        </div>
+                    </div>
+                    <div
+                        style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap:var(--space-4); margin-bottom:var(--space-4);">
+                        <div class="form-group">
+                            <label class="form-label" for="editDuration">Duration (Months)</label>
+                            <input type="number" id="editDuration" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:var(--space-4);">
+                        <label class="form-label" for="editStartDate">Start Date</label>
+                        <input type="date" id="editStartDate" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="editAddress">Address</label>
+                        <textarea id="editAddress" class="form-textarea" style="min-height:60px;"></textarea>
+                    </div>
+                    <div style="display:flex;gap:var(--space-3);margin-top:var(--space-8);">
+                        <button type="submit" class="btn btn-primary ripple" style="flex:1;">Update Profile</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick="Modal.close('editPersonModal')">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script/app.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/person-detail.js"></script>
+</body>
+
+</html>

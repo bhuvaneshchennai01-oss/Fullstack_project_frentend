@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up – FinSmart</title>
+    <meta name="description" content="Create your free FinSmart account and start managing loans smarter.">
+    <link rel="stylesheet" href="../style/variables.css">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/components.css">
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/pages.css">
+    <link rel="stylesheet" href="../style/animations.css">
+    <link rel="stylesheet" href="../style/responsive.css">
+</head>
+
+<body>
+    <div class="auth-layout">
+        <div class="auth-card">
+            <a href="../index.html" class="auth-logo">
+                <div class="sidebar-logo-icon">F</div>
+                <span class="sidebar-logo-text">FinSmart</span>
+            </a>
+
+            <h2 class="auth-title">Create your account</h2>
+            <p class="auth-subtitle">Start managing your loans for free — no credit card needed</p>
+
+            <form id="signupForm" class="auth-form" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="signupName">Full Name <span class="required">*</span></label>
+                    <div class="input-group">
+                        <span class="input-icon" data-icon="user"></span>
+                        <input type="text" id="signupName" class="form-input" placeholder="John Doe" required
+                            autocomplete="name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="signupEmail">Email Address <span class="required">*</span></label>
+                    <div class="input-group">
+                        <span class="input-icon" data-icon="email"></span>
+                        <input type="email" id="signupEmail" class="form-input" placeholder="you@example.com" required
+                            autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="signupPassword">Password <span class="required">*</span></label>
+                    <div class="input-group password-group">
+                        <span class="input-icon" data-icon="lock"></span>
+                        <input type="password" id="signupPassword" class="form-input" placeholder="Min 6 characters"
+                            required minlength="6" autocomplete="new-password">
+                        <button type="button" class="password-toggle" data-icon="eye"
+                            aria-label="Toggle password visibility"></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="signupConfirmPassword">Confirm Password <span
+                            class="required">*</span></label>
+                    <div class="input-group password-group">
+                        <span class="input-icon" data-icon="lock"></span>
+                        <input type="password" id="signupConfirmPassword" class="form-input"
+                            placeholder="Re-enter password" required minlength="6" autocomplete="new-password">
+                        <button type="button" class="password-toggle" data-icon="eye"
+                            aria-label="Toggle password visibility"></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="termsAgree" required>
+                        <span class="checkbox-checkmark"></span>
+                        <span class="checkbox-label">I agree to the <a href="#" class="auth-link-sm">Terms & Privacy
+                                Policy</a></span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg ripple" style="width:100%;">
+                    Create Account
+                </button>
+
+                <div class="auth-divider">or</div>
+
+
+            </form>
+
+            <div class="auth-footer">
+                Already have an account? <a href="login.html">Sign in</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script/app.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/auth.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup – FinSmart</title>
+    <meta name="description" content="Set up your FinSmart account preferences.">
+    <link rel="stylesheet" href="../style/variables.css">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/components.css">
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/pages.css">
+    <link rel="stylesheet" href="../style/animations.css">
+    <link rel="stylesheet" href="../style/responsive.css">
+</head>
+
+<body>
+    <div class="page-loader" id="pageLoader">
+        <div class="spinner-xl"></div>
+    </div>
+    <div class="setup-layout">
+        <div class="setup-card">
+            <!-- Progress Indicator -->
+            <div class="wizard-steps">
+                <div class="wizard-step active" data-step="1">
+                    <div class="wizard-step-number">1</div>
+                    <span class="wizard-step-label">Business</span>
+                </div>
+                <div class="wizard-connector"></div>
+                <div class="wizard-step" data-step="2">
+                    <div class="wizard-step-number">2</div>
+                    <span class="wizard-step-label">Preferences</span>
+                </div>
+                <div class="wizard-connector"></div>
+                <div class="wizard-step" data-step="3">
+                    <div class="wizard-step-number">3</div>
+                    <span class="wizard-step-label">Launch</span>
+                </div>
+            </div>
+
+            <!-- Form 1: Identity & Brand -->
+            <div class="setup-step active" data-step="1">
+                <form id="setupForm1" novalidate>
+                    <div class="setup-header">
+                        <div class="sidebar-logo">
+                            <div class="sidebar-logo-icon">F</div>
+                            <span class="sidebar-logo-text">FinSmart</span>
+                        </div>
+                        <h2>Let's set up your account</h2>
+                        <p>This will only take a minute</p>
+                    </div>
+
+                    <div class="setup-body">
+                        <div class="setup-section-title">
+                            <h3>Tell us about your business</h3>
+                            <p>This helps us personalize your experience</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="setupBusiness">Business Name <span
+                                    class="required">*</span></label>
+                            <input type="text" id="setupBusiness" class="form-input"
+                                placeholder="e.g., Kumar Finance Services" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="setupType">Business Type</label>
+                            <select id="setupType" class="form-select">
+                                <option value="individual">Individual Lender</option>
+                                <option value="micro">Microfinance Company</option>
+                                <option value="nbfc">NBFC</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-lg setup-next ripple">
+                            Continue
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Form 2: Lending Preferences -->
+            <div class="setup-step" data-step="2">
+                <form id="setupForm2" novalidate>
+                    <div class="setup-header">
+                        <h2>Set your preferences</h2>
+                        <p>You can always change these later in Settings</p>
+                    </div>
+
+                    <div class="setup-body">
+                        <div class="form-group">
+                            <label class="form-label" for="setupCurrency">Currency</label>
+                            <select id="setupCurrency" class="form-select">
+                                <option value="INR">₹ Indian Rupee (INR)</option>
+                               
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="setupInterest">Default Interest (₹ per 100)</label>
+                            <input type="number" id="setupInterest" class="form-input" value="2" min="1" max="100"
+                                step="0.5">
+                            <p class="form-hint">Monthly interest rate per ₹100 principal</p>
+                        </div>
+
+
+                        <div class="setup-actions">
+                            <button type="button" class="btn btn-secondary btn-lg setup-prev">
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary btn-lg setup-next ripple">
+                                Continue
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Form 3: Handshake & Launch -->
+            <div class="setup-step" data-step="3">
+                <div class="setup-header">
+                    <div class="setup-success-icon">
+                        <span data-icon="check"></span>
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <h2>You're all set!</h2>
+                    <p>Your FinSmart account is ready. Start by adding your first borrower or explore the dashboard.</p>
+                </div>
+                <div class="setup-body">
+                    <div class="setup-actions-vertical">
+                        <button class="btn btn-primary btn-xl setup-finish ripple">
+                            Go to Dashboard
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-lg setup-prev">
+                            Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script/app.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/auth.js"></script>
+</body>
+
+</html>

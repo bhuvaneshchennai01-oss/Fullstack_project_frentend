@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinSmart – Smart Finance Management for Modern Lenders</title>
+  <meta name="description"
+    content="FinSmart helps lenders and business owners manage loans, interest, and borrowers with a beautiful, modern dashboard.">
+  <link rel="stylesheet" href="style/variables.css">
+  <link rel="stylesheet" href="style/base.css">
+  <link rel="stylesheet" href="style/components.css">
+  <link rel="stylesheet" href="style/layout.css">
+  <link rel="stylesheet" href="style/pages.css">
+  <link rel="stylesheet" href="style/animations.css">
+  <link rel="stylesheet" href="style/responsive.css">
+</head>
+
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav class="landing-nav" aria-label="Main navigation">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">F</div>
+      <span class="sidebar-logo-text">FinSmart</span>
+    </div>
+    <div class="landing-nav-links" id="navLinks">
+      <a href="#features">Features</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <div class="landing-nav-actions">
+      <a href="pages/login.html" class="btn btn-ghost"
+        style="color:rgba(255,255,255,0.9);border:1px solid rgba(255,255,255,0.2);">Log In</a>
+      <a href="pages/signup.html" class="btn btn-primary">Get Started Free</a>
+    </div>
+    <button class="btn btn-icon" id="mobileNavToggle" aria-label="Toggle menu" style="color:white;"
+      data-icon="menu"></button>
+  </nav>
+
+  <main id="main">
+    <!-- ── Hero Section ── -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <div class="hero-badge hero-animate"><span data-icon="star" style="margin-right:8px; color:#fbbf24;"></span>
+              #1 Finance Management Platform</div>
+            <h1 class="hero-animate">
+              Manage Loans<br><span>Smarter & Faster</span>
+            </h1>
+            <p class="hero-description hero-animate">
+              The all-in-one dashboard for lenders and business owners. Track borrowers, automate interest calculations,
+              and grow your portfolio with confidence.
+            </p>
+            <div class="hero-cta hero-animate">
+              <a href="pages/signup.html" class="btn btn-primary btn-xl ripple">
+                Start For Free <span data-icon="arrowRight" style="margin-left:8px;"></span>
+              </a>
+              <a href="#features" class="btn btn-ghost btn-lg">
+                See How It Works
+              </a>
+            </div>
+            <div class="hero-stats hero-animate">
+              <div>
+                <div class="hero-stat-value">₹2.4Cr+</div>
+                <div class="hero-stat-label">Loans Managed</div>
+              </div>
+              <div>
+                <div class="hero-stat-value">1,200+</div>
+                <div class="hero-stat-label">Active Users</div>
+              </div>
+              <div>
+                <div class="hero-stat-value">99.9%</div>
+                <div class="hero-stat-label">Uptime</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual hero-animate">
+            <div class="hero-mockup animate-float">
+              <div class="hero-mockup-header">
+                <div class="hero-mockup-dot" style="background:#ff5f57;"></div>
+                <div class="hero-mockup-dot" style="background:#febc2e;"></div>
+                <div class="hero-mockup-dot" style="background:#28c840;"></div>
+              </div>
+              <div class="hero-mockup-content">
+                <div class="hero-mockup-row">
+                  <div class="hero-mockup-card">
+                    <h4>Total Lent</h4>
+                    <div class="value">₹12.5L</div>
+                  </div>
+                  <div class="hero-mockup-card">
+                    <h4>Collected</h4>
+                    <div class="value">₹8.4L</div>
+                  </div>
+                </div>
+                <div class="hero-mockup-row">
+                  <div class="hero-mockup-card">
+                    <h4>Net Profit</h4>
+                    <div class="value" style="color:var(--success-400);">₹1.2L</div>
+                  </div>
+                  <div class="hero-mockup-card">
+                    <h4>Outstanding</h4>
+                    <div class="value" style="color:var(--warning-400);">₹4.1L</div>
+                  </div>
+                </div>
+                <div class="hero-mockup-card">
+                  <h4>Monthly Collections</h4>
+                  <div style="display:flex;align-items:flex-end;gap:4px;height:60px;margin-top:8px;">
+                    <div style="flex:1;background:rgba(99,102,241,0.5);border-radius:3px 3px 0 0;height:40%;"></div>
+                    <div style="flex:1;background:rgba(99,102,241,0.6);border-radius:3px 3px 0 0;height:55%;"></div>
+                    <div style="flex:1;background:rgba(99,102,241,0.7);border-radius:3px 3px 0 0;height:70%;"></div>
+                    <div style="flex:1;background:rgba(99,102,241,0.8);border-radius:3px 3px 0 0;height:85%;"></div>
+                    <div style="flex:1;background:rgba(99,102,241,0.9);border-radius:3px 3px 0 0;height:60%;"></div>
+                    <div style="flex:1;background:rgba(99,102,241,1);border-radius:3px 3px 0 0;height:95%;"></div>
+                  </div>
+                </div>
+                <div class="hero-mockup-card" style="display:flex;align-items:center;gap:12px;">
+                  <div class="activity-icon"
+                    style="background:rgba(99,102,241,0.2); color:white; width:36px; height:36px;">
+                    <span data-icon="user"></span>
+                  </div>
+                  <div style="flex:1;">
+                    <div style="color:rgba(255,255,255,0.8);font-size:12px;">Ravi Kumar – EMI Received</div>
+                    <div style="color:rgba(255,255,255,0.5);font-size:10px;">2 minutes ago</div>
+                  </div>
+                  <div style="color:#28c840;font-size:13px;font-weight:600;">+₹5,500</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Features Section ── -->
+    <section class="section" id="features" style="background:var(--bg-primary);">
+      <div class="container">
+        <div class="section-header scroll-animate">
+          <div class="section-badge"><span data-icon="trending" style="margin-right:8px;"></span> Powerful Features
+          </div>
+          <h2 class="section-title">Everything You Need to<br>Manage Finances</h2>
+          <p class="section-subtitle">Built for lenders who want clarity, speed, and control over their portfolio.</p>
+        </div>
+        <div class="features-grid stagger-children">
+          <div class="feature-card scroll-animate">
+            <div class="feature-icon" style="background:var(--primary-50);color:var(--primary-500);" data-icon="search">
+            </div>
+            <h3>Smart Dashboard</h3>
+            <p>Get a complete overview of your lending portfolio with real-time stats, interactive charts, and key
+              metrics at a glance.</p>
+          </div>
+          <div class="feature-card scroll-animate">
+            <div class="feature-icon" style="background:var(--accent-50);color:var(--accent-500);" data-icon="user">
+            </div>
+            <h3>Borrower Management</h3>
+            <p>Add, search, and filter borrowers effortlessly. Keep all contact details, loan info, and payment history
+              in one place.</p>
+          </div>
+          <div class="feature-card scroll-animate">
+            <div class="feature-icon" style="background:var(--success-50);color:var(--success-500);"
+              data-icon="arrowRight" style="transform:rotate(-45deg);"></div>
+            <h3>Interest Tracking</h3>
+            <p>Automatic interest calculations with flexible rates. Track EMIs, partial payments, and outstanding
+              balances with precision.</p>
+          </div>
+          <div class="feature-card scroll-animate">
+            <div class="feature-icon" style="background:var(--warning-50);color:var(--warning-500);" data-icon="email">
+            </div>
+            <h3>Reports & Analytics</h3>
+            <p>Deep dive into your collection trends, borrower performance, and portfolio health with beautiful,
+              exportable reports.</p>
+          </div>
+          <div class="feature-card scroll-animate">
+            <div class="feature-icon" style="background:var(--danger-50);color:var(--danger-500);" data-icon="alert">
+            </div>
+            <h3>Smart Alerts</h3>
+            <p>Never miss a payment. Get notified about overdue loans, upcoming EMIs, and important milestones
+              automatically.</p>
+          </div>
+          <div class="feature-card scroll-animate">
+            <div class="feature-icon" style="background:hsl(190, 70%, 92%);color:hsl(190, 70%, 42%);" data-icon="lock">
+            </div>
+            <h3>Secure & Private</h3>
+            <p>Your data stays on your device. No cloud dependency, no third-party access. Complete privacy and security
+              built-in.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Testimonials ── -->
+    <section class="section" id="testimonials" style="background:var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header scroll-animate">
+          <div class="section-badge"><span data-icon="user" style="margin-right:8px;"></span> What Users Say</div>
+          <h2 class="section-title">Trusted by Business Owners</h2>
+          <p class="section-subtitle">Hear from lenders who transformed their business with FinSmart.</p>
+        </div>
+        <div class="testimonials-grid stagger-children">
+          <div class="testimonial-card scroll-animate">
+            <div class="testimonial-stars">
+              <span data-icon="star"></span><span data-icon="star"></span><span data-icon="star"></span><span
+                data-icon="star"></span><span data-icon="star"></span>
+            </div>
+            <p class="testimonial-text">"FinSmart completely changed how I manage my lending business. The dashboard
+              gives me clarity I never had before — I can see my entire portfolio at a glance."</p>
+            <div class="testimonial-author">
+              <div class="avatar" style="background:hsl(224, 76%, 48%);">RK</div>
+              <div>
+                <div class="testimonial-author-name">Rajesh Kumar</div>
+                <div class="testimonial-author-role">Private Lender, Mumbai</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card scroll-animate">
+            <div class="testimonial-stars">
+              <span data-icon="star"></span><span data-icon="star"></span><span data-icon="star"></span><span
+                data-icon="star"></span><span data-icon="star"></span>
+            </div>
+            <p class="testimonial-text">"The borrower management is incredible. I used to track everything in
+              spreadsheets — now it's all organized with automatic interest calculations. Saved me hours!"</p>
+            <div class="testimonial-author">
+              <div class="avatar" style="background:hsl(152, 68%, 40%);">PS</div>
+              <div>
+                <div class="testimonial-author-name">Priya Sharma</div>
+                <div class="testimonial-author-role">Finance Consultant, Delhi</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card scroll-animate">
+            <div class="testimonial-stars">
+              <span data-icon="star"></span><span data-icon="star"></span><span data-icon="star"></span><span
+                data-icon="star"></span><span data-icon="star"></span>
+            </div>
+            <p class="testimonial-text">"Beautiful design, easy to use, and the reports feature helps me make better
+              decisions. I can export everything to CSV anytime I need it. Highly recommended!"</p>
+            <div class="testimonial-author">
+              <div class="avatar" style="background:hsl(255, 70%, 48%);">AM</div>
+              <div>
+                <div class="testimonial-author-name">Amit Mehta</div>
+                <div class="testimonial-author-role">Business Owner, Bangalore</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA Section ── -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="cta-section scroll-animate">
+          <h2>Ready to Take Control of<br>Your Finances?</h2>
+          <p>Join thousands of lenders who trust FinSmart to manage their portfolio. Start free, no credit card
+            required.</p>
+          <a href="pages/signup.html" class="btn btn-primary btn-xl ripple"
+            style="background:white;color:var(--primary-600);">
+            Get Started Free <span data-icon="arrowRight" style="margin-left:8px;"></span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="landing-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">F</div>
+            <span class="sidebar-logo-text">FinSmart</span>
+          </div>
+          <p>The modern way to manage loans, interest, and borrowers. Built for lenders who demand clarity and control.
+          </p>
+        </div>
+        <div class="footer-column">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#">Changelog</a></li>
+            <li><a href="#">Roadmap</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 FinSmart. All rights reserved.</span>
+        <span>Made with <span data-icon="heart" style="color:#ef4444; vertical-align:middle;"></span> in India</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script/app.js"></script>
+  <script src="script/api.js"></script>
+</body>
+
+</html>

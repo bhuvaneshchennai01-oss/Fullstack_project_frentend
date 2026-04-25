@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports – FinSmart</title>
+    <meta name="description" content="Analytics and reports for your lending portfolio.">
+    <link rel="stylesheet" href="../style/variables.css">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/components.css">
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/pages.css">
+    <link rel="stylesheet" href="../style/animations.css">
+    <link rel="stylesheet" href="../style/responsive.css">
+</head>
+
+<body>
+    <div class="page-loader" id="pageLoader">
+        <div class="spinner-xl"></div>
+    </div>
+    <div class="app-shell">
+        <div class="sidebar-overlay"></div>
+
+        <aside class="sidebar" aria-label="Sidebar navigation">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">F</div>
+                    <span class="sidebar-logo-text">FinSmart</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Menu</div>
+                    <a href="dashboard.html" class="nav-link"><span class="nav-icon" data-icon="home"></span>
+                        Dashboard</a>
+                    <a href="persons.html" class="nav-link"><span class="nav-icon" data-icon="user"></span>
+                        Borrowers</a>
+                    <a href="reports.html" class="nav-link active" aria-current="page"><span class="nav-icon"
+                            data-icon="chart"></span>
+                        Reports</a>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">System</div>
+                    <a href="settings.html" class="nav-link"><span class="nav-icon" data-icon="settings"></span>
+                        Settings</a>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="sidebar-toggle" aria-label="Toggle sidebar" data-icon="menu"
+                        style="display:none;"></button>
+                    <div class="mobile-logo" style="display:none;">
+                        <div
+                            style="background:var(--primary-500); color:white; width:32px; height:32px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1rem;">
+                            F</div>
+                        <span style="font-weight:800; font-size:1rem; color:var(--text-primary);">FinSmart</span>
+                    </div>
+                    <h1 class="top-bar-title">Reports &amp; Analytics</h1>
+                </div>
+                <div class="top-bar-right">
+                    <!-- <button id="exportCSV" class="btn btn-ghost btn-sm ripple" style="margin-right:var(--space-2);">
+                        <span data-icon="download"></span> Export Report
+                    </button> -->
+                    <a href="add-person.html" class="btn btn-primary btn-sm ripple">
+                        <span data-icon="plus"></span> Add Borrower
+                    </a>
+
+                    <div class="search-bar global-search">
+                        <span class="search-icon" data-icon="search"></span>
+                        <input type="text" id="globalSearchInput" placeholder="Search borrower" aria-label="Search">
+                        <div class="search-results-dropdown" id="globalSearchResults"></div>
+                    </div>
+
+                    <button class="btn btn-icon btn-ghost theme-toggle-btn" aria-label="Toggle theme"
+                        data-tooltip="Toggle Dark/Light Mode">
+                        <span data-icon="moon"></span>
+                    </button>
+
+                    <!-- Notification Center -->
+                    <div class="notification-center dropdown" id="notificationCenter">
+                        <button class="btn btn-icon btn-ghost dropdown-toggle" aria-label="Notifications"
+                            data-tooltip="Notifications">
+                            <span data-icon="bell"></span>
+                            <span class="notification-badge" id="unreadCount" style="display:none;"></span>
+                        </button>
+                        <div class="dropdown-menu notification-dropdown">
+                            <div class="notification-header">
+                                <h3>Notifications</h3>
+                                <button class="btn-link" id="markAllRead">Mark all read</button>
+                            </div>
+                            <div class="notification-list" id="notificationList">
+                                <div class="notification-empty">No new alerts.</div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="reports.html">View all activity</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <!-- User Profile Dropdown -->
+                    <div class="user-profile-shortcut dropdown" id="userProfileDropdown">
+                        <button class="btn btn-icon btn-ghost dropdown-toggle"
+                            style="padding:0; width:36px; height:36px; border-radius:var(--radius-full); background:var(--surface-3); border:1px solid var(--border-light); overflow:hidden;">
+                            <div id="topBarAvatar" class="avatar avatar-sm"
+                                style="width:100%; height:100%; border-radius:0;">U</div>
+                        </button>
+                        <div class="dropdown-menu user-dropdown">
+                            <div class="user-dropdown-header">
+                                <p class="font-semibold" id="dropdownUserName">User</p>
+                                <p id="dropdownUserEmail"
+                                    style="font-size:var(--text-xs); color:var(--text-tertiary); margin:0;">
+                                    email@example.com</p>
+                            </div>
+                            <div style="padding:var(--space-1);">
+                                <a href="settings.html" class="user-dropdown-item">
+                                    <span data-icon="settings"></span> Settings
+                                </a>
+                                <a href="reports.html" class="user-dropdown-item">
+                                    <span data-icon="chart"></span> Analytics
+                                </a>
+                                <div style="height:1px; background:var(--border-light); margin:var(--space-1) 0;"></div>
+                                <button class="user-dropdown-item danger" onclick="logout()"
+                                    style="width:100%; border:none; background:none; cursor:pointer; text-align:left;">
+                                    <span data-icon="arrowLeft"></span> Sign Out
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="page-content page-enter" id="main">
+                <!-- Breadcrumbs -->
+                <ul class="breadcrumbs">
+                    <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                    <li class="breadcrumb-item active">Reports</li>
+                </ul>
+                <!-- Summary Stats -->
+                <div class="reports-header-cards stagger-children">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-label">Total Principal</div>
+                            <div class="stat-icon" style="background:var(--primary-50);color:var(--primary-500);"
+                                data-icon="trending"></div>
+                        </div>
+                        <div class="stat-value" id="reportTotalLent">--</div>
+                        <div class="stat-trend up">Global Lending</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-label">Total Collected</div>
+                            <div class="stat-icon" style="background:var(--success-50);color:var(--success-500);"
+                                data-icon="check"></div>
+                        </div>
+                        <div class="stat-value" id="reportCollected">--</div>
+                        <div class="stat-trend up">Collection Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-label">Net Profit</div>
+                            <div class="stat-icon" style="background:var(--accent-50);color:var(--accent-500);"
+                                data-icon="pie"></div>
+                        </div>
+                        <div class="stat-value" id="reportInterest">--</div>
+                        <div class="stat-trend up">Yield Performance</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-label">Outstanding</div>
+                            <div class="stat-icon" style="background:var(--warning-50);color:var(--warning-500);"
+                                data-icon="alert"></div>
+                        </div>
+                        <div class="stat-value" id="reportOutstanding">--</div>
+                        <div class="stat-trend down">Risk Exposure</div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="report-chart-grid">
+                    <!-- Collection Trend -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 style="font-size:var(--text-lg);font-weight:600;">Collection Trend</h3>
+                            <div style="display:flex;gap:var(--space-4);align-items:center;">
+                                <div style="display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);color:var(--text-tertiary);">
+                                    <span style="width:10px;height:10px;border-radius:2px;background:var(--accent-300);"></span>
+                                    Lent Amount
+                                </div>
+                                <div style="display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);color:var(--text-tertiary);">
+                                    <span style="width:10px;height:10px;border-radius:2px;background:var(--primary-500);"></span>
+                                    Collected Amount
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-bars" id="collectionTrendChart" style="height:260px;">
+                            <!-- Rendered by reports.js -->
+                        </div>
+                    </div>
+
+
+                    <!-- Interest Split -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 style="font-size:var(--text-lg);font-weight:600;">Interest Performance</h3>
+                        </div>
+                        <div id="interestSplitChart" style="padding:var(--space-4); padding-top:var(--space-2);">
+                            <!-- Rendered by reports.js -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Borrowers Table -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="flex-1" style="display:flex; flex-direction:column; justify-content:center;">
+                            <h3>Top Borrowers by Portfolio Size</h3>
+                            <p class="text-xs text-tertiary">Highest lending volume borrowers</p>
+                        </div>
+                        <a href="persons.html" class="btn btn-ghost btn-sm ripple">
+                            View All <span data-icon="arrowRight" style="font-size:12px; margin-left:2px;"></span>
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Borrower</th>
+                                    <th>Principal</th>
+                                    <th>Collected</th>
+                                    <th>Profit</th>
+                                    <th>Outstanding</th>
+                                    <th>Risk</th>
+                                    <th>Status</th>
+                                </tr>
+
+                            </thead>
+                            <tbody id="topBorrowersBody">
+                                <!-- Rendered by reports.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../script/app.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/reports.js"></script>
+</body>
+
+</html>

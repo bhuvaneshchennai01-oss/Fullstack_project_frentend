@@ -1,0 +1,218 @@
+/* ============================================
+   FinSmart Design System - CSS Variables
+   Premium SaaS Color Palette & Tokens
+   ============================================ */
+
+:root {
+  /* ── Primary Colors ── */
+  --primary-50: hsl(224, 76%, 95%);
+  --primary-100: hsl(224, 76%, 90%);
+  --primary-200: hsl(224, 76%, 80%);
+  --primary-300: hsl(224, 76%, 68%);
+  --primary-400: hsl(224, 76%, 56%);
+  --primary-500: hsl(224, 76%, 48%);
+  --primary-600: hsl(224, 76%, 40%);
+  --primary-700: hsl(224, 76%, 32%);
+  --primary-800: hsl(224, 76%, 24%);
+  --primary-900: hsl(224, 76%, 16%);
+
+  /* ── Accent / Indigo ── */
+  --accent-50: hsl(255, 70%, 96%);
+  --accent-100: hsl(255, 70%, 90%);
+  --accent-200: hsl(255, 70%, 80%);
+  --accent-300: hsl(255, 70%, 68%);
+  --accent-400: hsl(255, 70%, 56%);
+  --accent-500: hsl(255, 70%, 48%);
+  --accent-600: hsl(255, 70%, 40%);
+  --accent-700: hsl(255, 70%, 32%);
+
+  /* ── Semantic Colors ── */
+  --success-50: hsl(152, 68%, 95%);
+  --success-100: hsl(152, 68%, 85%);
+  --success-500: hsl(152, 68%, 40%);
+  --success-600: hsl(152, 68%, 32%);
+  --success-700: hsl(152, 68%, 24%);
+
+  --danger-50: hsl(0, 72%, 96%);
+  --danger-100: hsl(0, 72%, 88%);
+  --danger-500: hsl(0, 72%, 50%);
+  --danger-600: hsl(0, 72%, 42%);
+  --danger-700: hsl(0, 72%, 34%);
+
+  --warning-50: hsl(38, 92%, 96%);
+  --warning-100: hsl(38, 92%, 85%);
+  --warning-500: hsl(38, 92%, 50%);
+  --warning-600: hsl(38, 92%, 42%);
+
+  /* ── Neutrals ── */
+  --gray-25: hsl(220, 20%, 99%);
+  --gray-50: hsl(220, 20%, 97%);
+  --gray-100: hsl(220, 18%, 94%);
+  --gray-200: hsl(220, 16%, 88%);
+  --gray-300: hsl(220, 14%, 78%);
+  --gray-400: hsl(220, 12%, 62%);
+  --gray-500: hsl(220, 10%, 46%);
+  --gray-600: hsl(220, 12%, 36%);
+  --gray-700: hsl(220, 14%, 26%);
+  --gray-800: hsl(220, 18%, 18%);
+  --gray-900: hsl(220, 22%, 10%);
+  --gray-950: hsl(220, 25%, 6%);
+
+  /* ── Surface Colors (Light) ── */
+  --bg-primary: hsl(220, 20%, 98%);
+  --bg-secondary: hsl(220, 18%, 96%);
+  --bg-tertiary: hsl(220, 16%, 94%);
+  --surface-1: #ffffff;
+  --surface-2: hsl(220, 20%, 97%);
+  --surface-3: hsl(220, 18%, 94%);
+  --surface-glass: rgba(255, 255, 255, 0.72);
+  --surface-overlay: rgba(0, 0, 0, 0.5);
+
+  /* ── Text Colors ── */
+  --text-primary: hsl(220, 22%, 10%);
+  --text-secondary: hsl(220, 12%, 40%);
+  --text-tertiary: hsl(220, 10%, 56%);
+  --text-inverse: #ffffff;
+  --text-link: var(--primary-500);
+
+  /* ── Border Colors ── */
+  --border-light: hsl(220, 16%, 92%);
+  --border-default: hsl(220, 14%, 86%);
+  --border-strong: hsl(220, 12%, 76%);
+  --border-focus: var(--primary-400);
+
+  /* ── Typography ── */
+  --font-sans: 'Outfit', 'Inter', -apple-system, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 800;
+
+  /* ── Shadows (Premium & Soft) ── */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 12px 24px -6px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 24px 48px -12px rgba(0, 0, 0, 0.12);
+  --shadow-2xl: 0 32px 64px -16px rgba(0, 0, 0, 0.16);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  /* ── Spacing ── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* ── Radius ── */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+  --radius-full: 9999px;
+
+
+  /* ── Transitions ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+
+  /* ── Z-Index Scale ── */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+  --z-tooltip: 500;
+
+  /* ── Gradients ── */
+  --gradient-primary: linear-gradient(135deg, var(--primary-500) 0%, var(--accent-500) 100%);
+  --gradient-hero: linear-gradient(135deg, hsl(224, 76%, 20%) 0%, hsl(255, 70%, 28%) 50%, hsl(280, 60%, 24%) 100%);
+  --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+  --gradient-accent: linear-gradient(135deg, var(--accent-400) 0%, var(--primary-400) 100%);
+  --gradient-success: linear-gradient(135deg, var(--success-500), hsl(170, 60%, 40%));
+  --gradient-warm: linear-gradient(135deg, hsl(38, 92%, 50%), hsl(20, 85%, 50%));
+}
+
+/* ── Dark Mode ── */
+[data-theme="dark"] {
+  --bg-primary: hsl(220, 25%, 8%);
+  --bg-secondary: hsl(220, 22%, 11%);
+  --bg-tertiary: hsl(220, 20%, 14%);
+  --surface-1: hsl(220, 22%, 12%);
+  --surface-2: hsl(220, 20%, 15%);
+  --surface-3: hsl(220, 18%, 18%);
+  --surface-glass: rgba(20, 22, 30, 0.8);
+  --surface-overlay: rgba(0, 0, 0, 0.7);
+
+  --text-primary: hsl(220, 20%, 94%);
+  --text-secondary: hsl(220, 12%, 62%);
+  --text-tertiary: hsl(220, 10%, 48%);
+  --text-inverse: hsl(220, 22%, 10%);
+
+  --border-light: hsl(220, 18%, 18%);
+  --border-default: hsl(220, 16%, 22%);
+  --border-strong: hsl(220, 14%, 30%);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.35), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+
+  --gradient-card: linear-gradient(135deg, rgba(30, 33, 45, 0.9), rgba(25, 28, 38, 0.7));
+}
+
+/* System dark mode preference */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-primary: hsl(220, 25%, 8%);
+    --bg-secondary: hsl(220, 22%, 11%);
+    --bg-tertiary: hsl(220, 20%, 14%);
+    --surface-1: hsl(220, 22%, 12%);
+    --surface-2: hsl(220, 20%, 15%);
+    --surface-3: hsl(220, 18%, 18%);
+    --surface-glass: rgba(20, 22, 30, 0.8);
+    --surface-overlay: rgba(0, 0, 0, 0.7);
+
+    --text-primary: hsl(220, 20%, 94%);
+    --text-secondary: hsl(220, 12%, 62%);
+    --text-tertiary: hsl(220, 10%, 48%);
+    --text-inverse: hsl(220, 22%, 10%);
+
+    --border-light: hsl(220, 18%, 18%);
+    --border-default: hsl(220, 16%, 22%);
+    --border-strong: hsl(220, 14%, 30%);
+
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.35), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+
+    --gradient-card: linear-gradient(135deg, rgba(30, 33, 45, 0.9), rgba(25, 28, 38, 0.7));
+  }
+}

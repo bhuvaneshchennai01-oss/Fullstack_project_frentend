@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Borrower – FinSmart</title>
+    <meta name="description" content="Add a new borrower to your FinSmart portfolio.">
+    <link rel="stylesheet" href="../style/variables.css">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/components.css">
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/pages.css">
+    <link rel="stylesheet" href="../style/animations.css">
+    <link rel="stylesheet" href="../style/responsive.css">
+</head>
+
+<body>
+    <div class="page-loader" id="pageLoader">
+        <div class="spinner-xl"></div>
+    </div>
+    <div class="app-shell">
+        <div class="sidebar-overlay"></div>
+
+        <aside class="sidebar" aria-label="Sidebar navigation">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">F</div>
+                    <span class="sidebar-logo-text">FinSmart</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Menu</div>
+                    <a href="dashboard.html" class="nav-link"><span class="nav-icon" data-icon="home"></span>
+                        Dashboard</a>
+                    <a href="persons.html" class="nav-link"><span class="nav-icon" data-icon="user"></span>
+                        Borrowers</a>
+
+                    <a href="reports.html" class="nav-link"><span class="nav-icon" data-icon="chart"></span> Reports</a>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">System</div>
+                    <a href="settings.html" class="nav-link"><span class="nav-icon" data-icon="settings"></span>
+                        Settings</a>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="sidebar-toggle" aria-label="Toggle sidebar" data-icon="menu"
+                        style="display:none;"></button>
+                    <div class="mobile-logo" style="display:none;">
+                        <div
+                            style="background:var(--primary-500); color:white; width:32px; height:32px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1rem;">
+                            F</div>
+                        <span style="font-weight:800; font-size:1rem; color:var(--text-primary);">FinSmart</span>
+                    </div>
+                    <h1 class="top-bar-title">Add Borrower</h1>
+                </div>
+                <div class="top-bar-right">
+                    <div class="search-bar global-search">
+                        <span class="search-icon" data-icon="search"></span>
+                        <input type="text" id="globalSearchInput" placeholder="Search borrowers... (Ctrl+K)"
+                            aria-label="Search">
+                        <div class="search-results-dropdown" id="globalSearchResults"></div>
+                    </div>
+
+                    <button class="btn btn-icon btn-ghost theme-toggle-btn" aria-label="Toggle theme"
+                        data-tooltip="Toggle Dark/Light Mode">
+                        <span data-icon="moon"></span>
+                    </button>
+
+                    <!-- Notification Center -->
+                    <div class="notification-center dropdown" id="notificationCenter">
+                        <button class="btn btn-icon btn-ghost dropdown-toggle" aria-label="Notifications"
+                            data-tooltip="Notifications">
+                            <span data-icon="bell"></span>
+                            <span class="notification-badge" id="unreadCount" style="display:none;"></span>
+                        </button>
+                        <div class="dropdown-menu notification-dropdown">
+                            <div class="notification-header">
+                                <h3>Notifications</h3>
+                                <button class="btn-link" id="markAllRead">Mark all read</button>
+                            </div>
+                            <div class="notification-list" id="notificationList">
+                                <div class="notification-empty">No new alerts.</div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="reports.html">View all activity</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- User Profile Dropdown -->
+                    <div class="user-profile-shortcut dropdown" id="userProfileDropdown">
+                        <button class="btn btn-icon btn-ghost dropdown-toggle"
+                            style="padding:0; width:36px; height:36px; border-radius:var(--radius-full); background:var(--surface-3); border:1px solid var(--border-light); overflow:hidden;">
+                            <div id="topBarAvatar" class="avatar avatar-sm"
+                                style="width:100%; height:100%; border-radius:0;">U</div>
+                        </button>
+                        <div class="dropdown-menu user-dropdown">
+                            <div class="user-dropdown-header">
+                                <p class="font-semibold" id="dropdownUserName">User</p>
+                                <p id="dropdownUserEmail"
+                                    style="font-size:var(--text-xs); color:var(--text-tertiary); margin:0;">
+                                    email@example.com</p>
+                            </div>
+                            <div style="padding:var(--space-1);">
+                                <a href="settings.html" class="user-dropdown-item">
+                                    <span data-icon="settings"></span> Settings
+                                </a>
+                                <a href="reports.html" class="user-dropdown-item">
+                                    <span data-icon="chart"></span> Analytics
+                                </a>
+                                <div style="height:1px; background:var(--border-light); margin:var(--space-1) 0;"></div>
+                                <button class="user-dropdown-item danger" onclick="logout()"
+                                    style="width:100%; border:none; background:none; cursor:pointer; text-align:left;">
+                                    <span data-icon="arrowLeft"></span> Sign Out
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="page-content page-enter" id="main">
+                <!-- Breadcrumbs -->
+                <ul class="breadcrumbs">
+                    <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="persons.html">Borrowers</a></li>
+                    <li class="breadcrumb-item active">Add New</li>
+                </ul>
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h2 class="page-title">New Borrower</h2>
+                        <p class="page-subtitle">Fill in the details below to add a new borrower</p>
+                    </div>
+                    <a href="persons.html" class="btn btn-secondary">← Back to List</a>
+                </div>
+
+                <div
+                    style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:var(--space-8); align-items: start;">
+                    <div class="card">
+                        <form id="addPersonForm" novalidate>
+                            <div
+                                style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap:var(--space-5);">
+                                <!-- Name -->
+                                <div class="form-group">
+                                    <label class="form-label" for="personName">Full Name <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="personName" class="form-input" placeholder="e.g., Ravi Kumar"
+                                        required>
+                                </div>
+
+                                <!-- Phone -->
+                                <div class="form-group">
+                                    <label class="form-label" for="personPhone">Phone Number <span
+                                            class="required">*</span></label>
+                                    <input type="tel" id="personPhone" class="form-input" placeholder="e.g., 9876543210"
+                                        required maxlength="10">
+                                </div>
+
+                                <!-- Email -->
+                                <div class="form-group">
+                                    <label class="form-label" for="personEmail">Email Address</label>
+                                    <input type="email" id="personEmail" class="form-input"
+                                        placeholder="e.g., ravi@email.com">
+                                </div>
+
+                                <!-- Address -->
+                                <div class="form-group">
+                                    <label class="form-label" for="personAddress">Address</label>
+                                    <input type="text" id="personAddress" class="form-input"
+                                        placeholder="e.g., 12 MG Road, Bangalore">
+                                </div>
+
+                                <!-- Loan Amount -->
+                                <div class="form-group">
+                                    <label class="form-label" for="personLoanAmount">Loan Amount (₹) <span
+                                            class="required">*</span></label>
+                                    <input type="number" id="personLoanAmount" class="form-input"
+                                        placeholder="e.g., 50000" required min="1">
+                                </div>
+
+                                <!-- Interest Rate -->
+                                <div class="form-group">
+                                    <label class="form-label" for="personInterestRate">Interest (₹ per 100) <span
+                                            class="required">*</span></label>
+                                    <input type="number" id="personInterestRate" class="form-input"
+                                        placeholder="e.g., 2" required min="0.1" max="100" step="0.5">
+                                </div>
+
+                                <!-- Start Date -->
+                                <div class="form-group">
+                                    <label class="form-label" for="personStartDate">Start Date <span
+                                            class="required">*</span></label>
+                                    <input type="date" id="personStartDate" class="form-input" required>
+                                </div>
+
+
+                                <!-- Duration -->
+                                <div class="form-group">
+                                    <label class="form-label" for="personDuration">Duration (Months) <span
+                                            class="required">*</span></label>
+                                    <input type="number" id="personDuration" class="form-input" placeholder="e.g., 12"
+                                        required min="1" value="12">
+                                </div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="form-group" style="margin-top:var(--space-5);">
+                                <label class="form-label" for="personNotes">Notes (optional)</label>
+                                <textarea id="personNotes" class="form-textarea"
+                                    placeholder="Any additional notes about this borrower or loan..."
+                                    rows="3"></textarea>
+                            </div>
+
+                            <!-- Submit -->
+                            <div style="display:flex;gap:var(--space-3);margin-top:var(--space-8);">
+                                <button type="submit" class="btn btn-primary btn-lg ripple" style="flex:1;">
+                                    ✓ Add Borrower
+                                </button>
+                                <a href="persons.html" class="btn btn-secondary btn-lg">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Live Calculation Card -->
+                    <div class="card" id="calcPreview">
+                        <h3 class="section-title" style="font-size: 1.1rem; margin-bottom: var(--space-4);">
+                            Summary Preview</h3>
+                        <div class="summary-card">
+                            <div class="summary-item">
+                                <span class="summary-label">Monthly Interest</span>
+                                <span id="calcMonthly" class="summary-value">₹0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Total Interest (Loan Period)</span>
+                                <span id="calcYearly" class="summary-value">₹0</span>
+                            </div>
+                            <hr class="divider" style="margin: var(--space-1) 0;">
+                            <div class="summary-item">
+                                <span class="summary-label font-bold">Total Maturity</span>
+                                <span id="calcTotal" class="summary-total">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../script/app.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/add-person.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard – FinSmart</title>
+    <meta name="description"
+        content="FinSmart Dashboard: view your lending portfolio summary, charts, and recent activity.">
+    <link rel="stylesheet" href="../style/variables.css">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/components.css">
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/pages.css">
+    <link rel="stylesheet" href="../style/animations.css">
+    <link rel="stylesheet" href="../style/responsive.css">
+</head>
+
+<body>
+    <div class="page-loader" id="pageLoader">
+        <div class="spinner-xl"></div>
+        <p style="font-weight:var(--weight-semibold); color:var(--text-secondary);">FinSmart is loading...</p>
+    </div>
+    <div class="app-shell">
+        <div class="sidebar-overlay"></div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" aria-label="Sidebar navigation">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">F</div>
+                    <span class="sidebar-logo-text">FinSmart</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Menu</div>
+                    <a href="dashboard.html" class="nav-link active" aria-current="page">
+                        <span class="nav-icon" data-icon="home"></span> Dashboard
+                    </a>
+                    <a href="persons.html" class="nav-link">
+                        <span class="nav-icon" data-icon="user"></span> Borrowers
+                    </a>
+                    <a href="add-person.html" class="nav-link">
+                        <span class="nav-icon" data-icon="arrowRight"></span> Add Borrower
+                    </a>
+                    <a href="reports.html" class="nav-link">
+                        <span class="nav-icon" data-icon="chart"></span> Reports
+                    </a>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">System</div>
+                    <a href="settings.html" class="nav-link">
+                        <span class="nav-icon" data-icon="settings"></span> Settings
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="sidebar-toggle" aria-label="Toggle sidebar" data-icon="menu"
+                        style="display:none;"></button>
+                    <div class="mobile-logo" style="display:none;">
+                        <div class="sidebar-logo-icon"
+                            style="background:var(--primary-500); color:white; width:32px; height:32px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1rem;">
+                            F</div>
+                        <span class="sidebar-logo-text"
+                            style="font-weight:800; font-size:1rem; color:var(--text-primary);">FinSmart</span>
+                    </div>
+                    <h1 class="top-bar-title" id="navGreeting">Dashboard</h1>
+                </div>
+                <div class="top-bar-right">
+                    <a href="add-person.html" class="btn btn-primary btn-sm ripple">
+                        <span data-icon="plus"></span> Add Borrower
+                    </a>
+
+                    <div class="search-bar global-search">
+                        <span class="search-icon" data-icon="search"></span>
+                        <input type="text" id="globalSearchInput" placeholder="Search borrowers... (Ctrl+K)"
+                            aria-label="Search">
+                        <div class="search-results-dropdown" id="globalSearchResults"></div>
+                    </div>
+
+                    <button class="btn btn-icon btn-ghost theme-toggle-btn" aria-label="Toggle theme"
+                        data-tooltip="Toggle Dark/Light Mode">
+                        <span data-icon="moon"></span>
+                    </button>
+
+                    <!-- Notification Center -->
+                    <div class="notification-center dropdown" id="notificationCenter">
+                        <button class="btn btn-icon btn-ghost dropdown-toggle" aria-label="Notifications"
+                            data-tooltip="Notifications">
+                            <span data-icon="bell"></span>
+                            <span class="notification-badge" id="unreadCount" style="display:none;"></span>
+                        </button>
+                        <div class="dropdown-menu notification-dropdown">
+                            <div class="notification-header">
+                                <h3>Notifications</h3>
+                                <div style="display:flex; gap: var(--space-3); align-items:center;">
+                                    <button class="btn-link" id="markAllRead">Mark all read</button>
+                                    <button class="btn btn-icon btn-ghost mobile-only" onclick="document.getElementById('notificationCenter').classList.remove('open')" style="width:32px; height:32px; padding:0; display:none;">
+                                        <span data-icon="plus" style="transform: rotate(45deg);"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="notificationList" class="notification-list">
+                                <div class="notification-empty">No new alerts.</div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="reports.html">View all activity</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Profile Dropdown -->
+                    <div class="user-profile-shortcut dropdown" id="userProfileDropdown">
+                        <button class="btn btn-icon btn-ghost dropdown-toggle"
+                            style="padding:0; width:36px; height:36px; border-radius:var(--radius-full); background:var(--surface-3); border:1px solid var(--border-light); overflow:hidden;">
+                            <div id="topBarAvatar" class="avatar avatar-sm"
+                                style="width:100%; height:100%; border-radius:0;">U</div>
+                        </button>
+                        <div class="dropdown-menu user-dropdown">
+                            <div class="user-dropdown-header">
+                                <p class="font-semibold" id="dropdownUserName"
+                                    style="font-size:var(--text-sm); margin:0;">
+                                    User</p>
+                                <p id="dropdownUserEmail"
+                                    style="font-size:var(--text-xs); color:var(--text-tertiary); margin:0;">
+                                    email@example.com</p>
+                            </div>
+                            <div style="padding:var(--space-1);">
+                                <a href="settings.html" class="user-dropdown-item">
+                                    <span data-icon="settings"></span> Settings
+                                </a>
+                                <a href="reports.html" class="user-dropdown-item">
+                                    <span data-icon="chart"></span> Analytics
+                                </a>
+                                <div style="height:1px; background:var(--border-light); margin:var(--space-1) 0;"></div>
+                                <button class="user-dropdown-item danger" onclick="logout()"
+                                    style="width:100%; border:none; background:none; cursor:pointer; text-align:left;">
+                                    <span data-icon="arrowLeft"></span> Sign Out
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="page-content page-enter" id="main">
+                <div class="dash-welcome page-hero" style="margin-bottom: var(--space-8);">
+                    <ul class="breadcrumbs" style="margin-bottom: var(--space-2);">
+                        <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ul>
+                    <h2 class="dash-greeting" id="mainGreeting">Dashboard</h2>
+                    <p class="page-subtitle">Overview of your lending portfolio today.</p>
+                </div>
+
+                <!-- Portfolio Title -->
+                <div class="section-header" style="margin-bottom: var(--space-6);">
+                    <span class="section-label">PORTFOLIO PERFORMANCE</span>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="dashboard-stats stagger-children">
+                    <a href="persons.html?filter=all" class="stat-card" style="text-decoration:none;color:inherit;">
+                        <div class="stat-header">
+                            <div class="stat-label">Total Principal</div>
+                            <div class="stat-icon" style="background:var(--primary-50);color:var(--primary-500);"
+                                data-icon="trending"></div>
+                        </div>
+                        <div class="stat-value skeleton-text" id="statTotalLent">--</div>
+                        <div class="stat-trend up">Portfolio Growth</div>
+                    </a>
+
+                    <a href="persons.html?filter=closed" class="stat-card" style="text-decoration:none;color:inherit;">
+                        <div class="stat-header">
+                            <div class="stat-label">Total Collected</div>
+                            <div class="stat-icon" style="background:var(--success-50);color:var(--success-500);"
+                                data-icon="check"></div>
+                        </div>
+                        <div class="stat-value skeleton-text" id="statCollected">--</div>
+                        <div class="stat-trend up">On Schedule</div>
+                    </a>
+                    <a href="reports.html" class="stat-card" style="text-decoration:none;color:inherit;">
+                        <div class="stat-header">
+                            <div class="stat-label">Net Profit</div>
+                            <div class="stat-icon" style="background:var(--accent-50);color:var(--accent-500);"
+                                data-icon="pie"></div>
+                        </div>
+                        <div class="stat-value skeleton-text" id="statInterest">--</div>
+                        <div class="stat-trend up">Business Upside</div>
+                    </a>
+
+                    <a href="persons.html" class="stat-card" style="text-decoration:none;color:inherit;">
+                        <div class="stat-header">
+                            <div class="stat-label">Total Portfolio</div>
+                            <div class="stat-icon" style="background:var(--primary-50);color:var(--primary-500);"
+                                data-icon="user"></div>
+                        </div>
+                        <div class="stat-value skeleton-text" id="statMonthlyCount">--</div>
+                        <div class="stat-trend">Borrower Count</div>
+                    </a>
+
+                    <a href="persons.html?filter=overdue" class="stat-card" style="text-decoration:none;color:inherit;">
+                        <div class="stat-header">
+                            <div class="stat-label">Outstanding</div>
+                            <div class="stat-icon" style="background:var(--warning-50);color:var(--warning-500);"
+                                data-icon="alert"></div>
+                        </div>
+                        <div class="stat-value skeleton-text" id="statOutstanding">--</div>
+                        <div class="stat-trend down">Pending Recovery</div>
+                    </a>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="dashboard-grid">
+                    <!-- Monthly Chart -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Monthly Collections</h3>
+                            <select class="form-select"
+                                style="width:auto;padding:var(--space-2) var(--space-8) var(--space-2) var(--space-3);font-size:var(--text-xs);">
+                                <option>2026</option>
+                                <option>2025</option>
+                            </select>
+                        </div>
+                        <div class="chart-bars" id="monthlyChart" style="height:220px;">
+                            <!-- Rendered by dashboard.js -->
+                        </div>
+                    </div>
+
+                    <!-- Side Panel -->
+                    <div style="display:flex;flex-direction:column;gap:var(--space-6);">
+                        <!-- Portfolio Breakdown -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Portfolio</h3>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:var(--space-6);">
+                                <div class="donut-chart" id="portfolioDonut" style="width:140px;height:140px;">
+                                    <div class="donut-chart-inner" style="width:90px;height:90px;">
+                                        <div class="value">--</div>
+                                        <div class="label">Total</div>
+                                    </div>
+                                </div>
+                                <div id="portfolioLegend"
+                                    style="display:flex;flex-direction:column;gap:var(--space-3);">
+                                    <!-- Rendered by dashboard.js -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity & Upcoming (Collection Hub) -->
+                        <div class="chart-card" style="flex:1; display:flex; flex-direction:column; min-height:420px;">
+                            <div class="tabs" style="margin-bottom:var(--space-4);">
+                                <button class="tab-btn active" onclick="switchDashboardTab('recent')">Recent</button>
+                                <button class="tab-btn" onclick="switchDashboardTab('upcoming')">Upcoming</button>
+                            </div>
+
+                            <!-- Recent Activity -->
+                            <div id="tabRecent" class="tab-content active" style="padding:0;">
+                                <div class="activity-list" id="recentActivity">
+                                    <!-- Rendered by dashboard.js -->
+                                </div>
+                                <div
+                                    style="padding:var(--space-4); text-align:center; border-top:1px solid var(--border-light);">
+                                    <a href="persons.html" class="btn btn-ghost btn-sm">View All History</a>
+                                </div>
+                            </div>
+
+                            <!-- Upcoming Collections -->
+                            <div id="tabUpcoming" class="tab-content" style="padding:0;">
+                                <div class="activity-list" id="upcomingDues">
+                                    <!-- Rendered by dashboard.js -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+
+
+    <script src="../script/app.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/dashboard.js"></script>
+</body>
+
+</html>
