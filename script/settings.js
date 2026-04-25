@@ -97,24 +97,37 @@ async function loadProfileSettings() {
         const emailEl = document.getElementById('settingsEmail');
         const bizEl = document.getElementById('settingsBusiness');
 
+        const bizTypeEl = document.getElementById('settingsBusinessType');
+
         if (nameEl) nameEl.value = profile.name || '';
         if (emailEl) emailEl.value = profile.email || '';
         if (bizEl) bizEl.value = profile.business_name || '';
+        if (bizTypeEl) bizTypeEl.value = profile.business_type || '';
 
         const saveBtn = document.getElementById('saveProfile');
         if (saveBtn) {
             saveBtn.addEventListener('click', async () => {
                 const name = nameEl?.value.trim();
                 const business = bizEl?.value.trim();
+                const businessType = bizTypeEl?.value.trim();
 
                 if (!name) { Toast.warning('Name is required'); return; }
 
                 setButtonLoading(saveBtn, true);
                 try {
-                    const updated = await API.auth.updateProfile(user.id, { name, business_name: business });
+                    const updated = await API.auth.updateProfile(user.id, { 
+                        name, 
+                        business_name: business,
+                        business_type: businessType 
+                    });
 
                     // Update local DB & sidebar
-                    DB.set('user', { ...user, name: updated.name, business: updated.business_name });
+                    DB.set('user', { 
+                        ...user, 
+                        name: updated.name, 
+                        business: updated.business_name,
+                        business_type: updated.business_type 
+                    });
                     Sidebar.updateUserInfo();
 
                     Toast.success('Profile updated successfully!');

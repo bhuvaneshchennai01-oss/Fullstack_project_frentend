@@ -256,6 +256,15 @@
                     </div>
                 </div>
 
+                <!-- Notes Section -->
+                <div class="card" id="notesSection" style="margin-bottom:var(--space-8); display:none;">
+                    <div style="display:flex; align-items:center; gap:var(--space-2); margin-bottom:var(--space-4); color:var(--text-secondary);">
+                        <span data-icon="info" style="width:16px; height:16px; opacity:0.7;"></span>
+                        <h3 style="font-size:var(--text-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin:0;">Borrower Notes</h3>
+                    </div>
+                    <p id="displayNotes" style="font-size:var(--text-md); line-height:1.6; color:var(--text-primary); margin:0; white-space:pre-wrap;"></p>
+                </div>
+
                 <!-- Payment Timeline -->
                 <div class="card">
                     <div
@@ -361,9 +370,14 @@
                         <label class="form-label" for="editStartDate">Start Date</label>
                         <input type="date" id="editStartDate" class="form-input" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-bottom:var(--space-4);">
                         <label class="form-label" for="editAddress">Address</label>
                         <textarea id="editAddress" class="form-textarea" style="min-height:60px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="editNotes">Notes (optional)</label>
+                        <textarea id="editNotes" class="form-textarea" style="min-height:100px;"
+                            placeholder="Any additional notes about this borrower or loan history..."></textarea>
                     </div>
                     <div style="display:flex;gap:var(--space-3);margin-top:var(--space-8);">
                         <button type="submit" class="btn btn-primary ripple" style="flex:1;">Update Profile</button>

@@ -199,7 +199,7 @@ const Utils = {
     const absDays = Math.abs(days);
 
     if (days === 0) return 'Today';
-    
+
     if (days > 0) {
       if (days === 1) return 'Yesterday';
       return `${days} days ago`;
@@ -633,7 +633,7 @@ async function initNotifications() {
     markAllReadBtn.onclick = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       const readIds = getReadIds();
       document.querySelectorAll('.notification-item.unread').forEach(item => {
         const id = item.dataset.id;

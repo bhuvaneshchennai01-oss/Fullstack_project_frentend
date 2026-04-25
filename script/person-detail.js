@@ -39,6 +39,7 @@ async function initPersonDetail() {
     renderPersonProfile(person);
     renderPersonStats(person);
     renderLoanOverview(person);
+    renderNotes(person);
 
     const payments = await API.payments.getAll(user.id, personId);
     renderPaymentTimeline(payments);
@@ -152,6 +153,20 @@ function renderLoanOverview(p) {
   setStatValue('displayPeriodInterest', paymentLabel);
 }
 
+/* ── Render Notes ── */
+function renderNotes(p) {
+  const section = document.getElementById('notesSection');
+  const display = document.getElementById('displayNotes');
+  if (!section || !display) return;
+
+  if (p.notes && p.notes.trim() !== '') {
+    section.style.display = 'block';
+    display.textContent = p.notes;
+  } else {
+    section.style.display = 'none';
+  }
+}
+
 /* ── Render Payment Timeline ── */
 function renderPaymentTimeline(payments) {
   const container = document.getElementById('paymentTimeline');
@@ -224,6 +239,7 @@ function initEditBorrower(person) {
     document.getElementById('editInterestAmount').value = person.interest_amount || 0;
     document.getElementById('editDuration').value = person.duration || 12;
     document.getElementById('editStartDate').value = person.start_date || '';
+    document.getElementById('editNotes').value = person.notes || '';
     Modal.open('editPersonModal');
   });
 
@@ -244,7 +260,8 @@ function initEditBorrower(person) {
         interest_mode: 'per_100',
         interest_type: 'monthly',
         duration: parseInt(document.getElementById('editDuration').value) || 12,
-        start_date: document.getElementById('editStartDate').value
+        start_date: document.getElementById('editStartDate').value,
+        notes: document.getElementById('editNotes').value
       });
       Modal.close('editPersonModal');
       Toast.success('Profile updated');
