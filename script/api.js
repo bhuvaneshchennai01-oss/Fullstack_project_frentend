@@ -3,7 +3,7 @@
    Uses fetch(), async/await, minimal boilerplate
 ====================================================== */
 
-const API_BASE_URL = "fullstack-project-backend-malxr3doh.vercel.app";
+const API_BASE_URL = "https://fullstack-project-backend-seven.vercel.app";
 
 /* =========================
    HELPER FUNCTION
