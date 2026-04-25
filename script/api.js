@@ -9,21 +9,32 @@ const API_BASE_URL = "https://fullstack-project-backend-seven.vercel.app";
    HELPER FUNCTION
 ========================= */
 async function request(url, options = {}) {
+    const { headers: customHeaders, ...otherOptions } = options;
+    
+    const init = {
+        headers: {
+            "Content-Type": "application/json",
+            ...customHeaders
+        },
+        ...otherOptions
+    };
+
     try {
-        const response = await fetch(url, {
-            headers: { "Content-Type": "application/json" },
-            ...options
-        });
+        const response = await fetch(url, init);
 
         if (response.status === 204) return null;
 
         const data = await response.json().catch(() => null);
 
-        if (!response.ok) throw new Error(data?.detail || "Request failed");
+        if (!response.ok) {
+            throw new Error(data?.detail || `Error ${response.status}: ${response.statusText}`);
+        }
 
         return data;
     } catch (err) {
-        if (err.message === "Failed to fetch") throw new Error("Cannot connect to server.");
+        if (err.name === "TypeError" && err.message === "Failed to fetch") {
+            throw new Error("Cannot connect to server. Please check your internet or API status.");
+        }
         throw err;
     }
 }
