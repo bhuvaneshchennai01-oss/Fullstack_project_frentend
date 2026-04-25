@@ -32,8 +32,9 @@ async function request(url, options = {}) {
 
         return data;
     } catch (err) {
-        if (err.name === "TypeError" && err.message === "Failed to fetch") {
-            throw new Error("Cannot connect to server. Please check your internet or API status.");
+        // If it's a network error (no response received)
+        if (err.name === "TypeError" || err.message.includes("fetch")) {
+            throw new Error(`Connection Failed: ${err.message}. Please check if the backend is awake or CORS is blocked.`);
         }
         throw err;
     }
