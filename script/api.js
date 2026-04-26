@@ -1,45 +1,41 @@
-/* ======================================================
-   FinSmart – Simplified API Client
-   Uses fetch(), async/await, minimal boilerplate
-====================================================== */
-
-const API_BASE_URL = "https://fullstack-project-backend-seven.vercel.app";
+// const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "fullstack-project-backend-seven.vercel.app";
 
 /* =========================
    HELPER FUNCTION
 ========================= */
 async function request(url, options = {}) {
-    const { headers: customHeaders, ...otherOptions } = options;
-    
-    const init = {
-        headers: {
-            "Content-Type": "application/json",
-            ...customHeaders
-        },
-        ...otherOptions
-    };
-
     try {
-        const response = await fetch(url, init);
+        // Make request
+        const response = await fetch(url, {
+            method: options.method || "GET",
+            headers: {
+                "Content-Type": "application/json",
+                ...(options.headers || {})
+            },
+            body: options.body ? JSON.stringify(options.body) : undefined
+        });
 
-        if (response.status === 204) return null;
+        // No content case
+        if (response.status === 204) {
+            return null;
+        }
 
-        const data = await response.json().catch(() => null);
+        // Try to read JSON
+        const data = await response.json();
 
+        // If request failed
         if (!response.ok) {
-            throw new Error(data?.detail || `Error ${response.status}: ${response.statusText}`);
+            throw new Error(data.message || "Something went wrong");
         }
 
         return data;
-    } catch (err) {
-        // If it's a network error (no response received)
-        if (err.name === "TypeError" || err.message.includes("fetch")) {
-            throw new Error(`Connection Failed: ${err.message}. Please check if the backend is awake or CORS is blocked.`);
-        }
-        throw err;
+
+    } catch (error) {
+        console.error("Request failed:", error);
+        throw error;
     }
 }
-
 /* =========================
    AUTH
 ========================= */
@@ -52,12 +48,12 @@ const auth = {
         method: "POST",
         body: JSON.stringify(userData)
     }),
-    getMe: (userId) => request(`${API_BASE_URL}/auth/me/${userId}?user_id=${userId}`),
-    updateProfile: (userId, updates) => request(`${API_BASE_URL}/auth/me/${userId}?user_id=${userId}`, {
+    getMe: (userId) => request(`${API_BASE_URL}/auth/me/${userId}`),
+    updateProfile: (userId, updates) => request(`${API_BASE_URL}/auth/me/${userId}`, {
         method: "PUT",
         body: JSON.stringify(updates)
     }),
-    changePassword: (currentPassword, newPassword, userId) => request(`${API_BASE_URL}/settings/me/password?user_id=${userId}`, {
+    changePassword: (currentPassword, newPassword, userId) => request(`${API_BASE_URL}/settings/me/password`, {
         method: "PUT",
         body: JSON.stringify({ current_password: currentPassword, new_password: newPassword })
     })

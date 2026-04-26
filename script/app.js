@@ -505,10 +505,7 @@ function renderStatusBadge(status) {
   return `<span class="badge ${classes[s] || 'badge-neutral'}">${label}</span>`;
 }
 
-/**
- * Utility to render a consistent risk badge
- * @param {Object} risk - Risk object from API {level, score, reason}
- */
+
 function renderRiskBadge(risk) {
   if (!risk) return '';
   const classes = {
@@ -522,9 +519,7 @@ function renderRiskBadge(risk) {
   </span>`;
 }
 
-/**
- * Helper to set value with optional skeleton removal
- */
+
 function setStatValue(id, value, animate = true) {
   const el = document.getElementById(id);
   if (!el) return;
