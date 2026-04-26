@@ -1,41 +1,43 @@
+
 // const API_BASE_URL = "http://127.0.0.1:8000";
-const API_BASE_URL = "fullstack-project-backend-seven.vercel.app";
+const API_BASE_URL = "http://127.0.0.1:8000fullstack-project-backend-seven.vercel.app";
+
 
 /* =========================
    HELPER FUNCTION
 ========================= */
 async function request(url, options = {}) {
+    const { headers: customHeaders, ...otherOptions } = options;
+    
+    const init = {
+        headers: {
+            "Content-Type": "application/json",
+            ...customHeaders
+        },
+        ...otherOptions
+    };
+
     try {
-        // Make request
-        const response = await fetch(url, {
-            method: options.method || "GET",
-            headers: {
-                "Content-Type": "application/json",
-                ...(options.headers || {})
-            },
-            body: options.body ? JSON.stringify(options.body) : undefined
-        });
+        const response = await fetch(url, init);
 
-        // No content case
-        if (response.status === 204) {
-            return null;
-        }
+        if (response.status === 204) return null;
 
-        // Try to read JSON
-        const data = await response.json();
+        const data = await response.json().catch(() => null);
 
-        // If request failed
         if (!response.ok) {
-            throw new Error(data.message || "Something went wrong");
+            throw new Error(data?.detail || `Error ${response.status}: ${response.statusText}`);
         }
 
         return data;
-
-    } catch (error) {
-        console.error("Request failed:", error);
-        throw error;
+    } catch (err) {
+        // If it's a network error (no response received)
+        if (err.name === "TypeError" || err.message.includes("fetch")) {
+            throw new Error(`Connection Failed: ${err.message}. Please check if the backend is awake or CORS is blocked.`);
+        }
+        throw err;
     }
 }
+
 /* =========================
    AUTH
 ========================= */
@@ -48,12 +50,12 @@ const auth = {
         method: "POST",
         body: JSON.stringify(userData)
     }),
-    getMe: (userId) => request(`${API_BASE_URL}/auth/me/${userId}`),
-    updateProfile: (userId, updates) => request(`${API_BASE_URL}/auth/me/${userId}`, {
+    getMe: (userId) => request(`${API_BASE_URL}/auth/me/${userId}?user_id=${userId}`),
+    updateProfile: (userId, updates) => request(`${API_BASE_URL}/auth/me/${userId}?user_id=${userId}`, {
         method: "PUT",
         body: JSON.stringify(updates)
     }),
-    changePassword: (currentPassword, newPassword, userId) => request(`${API_BASE_URL}/settings/me/password`, {
+    changePassword: (currentPassword, newPassword, userId) => request(`${API_BASE_URL}/settings/me/password?user_id=${userId}`, {
         method: "PUT",
         body: JSON.stringify({ current_password: currentPassword, new_password: newPassword })
     })
