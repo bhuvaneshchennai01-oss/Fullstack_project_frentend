@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://fullstack-project-backend-seven.vercel.app"
+const API_BASE_URL = "https://fullstack-project-backend-eta.vercel.app"
 // const API_BASE_URL = "http://localhost:8000";
 
 /* =========================
@@ -12,6 +12,7 @@ async function request(url, options = {}) {
         });
 
         if (response.status === 204) return null;
+        console.log(response)
 
         const data = await response.json().catch(() => null);
 

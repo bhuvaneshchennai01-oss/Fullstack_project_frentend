@@ -5,72 +5,6 @@
 
 'use strict';
 
-/* ── Theme Management ── */
-const Theme = {
-  init() {
-    const saved = localStorage.getItem('finsmart-theme');
-    if (saved) {
-      document.documentElement.setAttribute('data-theme', saved);
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
-    this.updateToggleIcons();
-    // Listen for system changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (!localStorage.getItem('finsmart-theme')) {
-        document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-        this.updateToggleIcons();
-      }
-    });
-  },
-  toggle() {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('finsmart-theme', next);
-    this.updateToggleIcons();
-    return next;
-  },
-  updateToggleIcons() {
-    const theme = this.get();
-    const iconKey = theme === 'dark' ? 'sun' : 'moon';
-    const iconContent = Icons[iconKey] || '';
-
-    document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
-      // Find the span with data-icon or the button itself if it contains the icon
-      const iconSpan = btn.querySelector('[data-icon]');
-      if (iconSpan) {
-        iconSpan.innerHTML = iconContent;
-        iconSpan.setAttribute('data-icon', iconKey);
-      } else {
-        btn.innerHTML = iconContent;
-      }
-
-      // Update tooltip if present
-      if (btn.hasAttribute('data-tooltip')) {
-        btn.setAttribute('data-tooltip', theme === 'dark' ? 'Light Mode' : 'Dark Mode');
-      }
-    });
-
-    // Update settings radio buttons if they exist
-    const lightRadio = document.querySelector('input[name="ui_theme"][value="light"]');
-    const darkRadio = document.querySelector('input[name="ui_theme"][value="dark"]');
-    if (lightRadio && darkRadio) {
-      if (theme === 'dark') {
-        darkRadio.checked = true;
-        darkRadio.closest('.theme-option')?.classList.add('active');
-        lightRadio.closest('.theme-option')?.classList.remove('active');
-      } else {
-        lightRadio.checked = true;
-        lightRadio.closest('.theme-option')?.classList.add('active');
-        darkRadio.closest('.theme-option')?.classList.remove('active');
-      }
-    }
-  },
-  get() {
-    return document.documentElement.getAttribute('data-theme') || 'light';
-  }
-};
 
 /* ── Toast Notifications ── */
 const Toast = {
@@ -183,18 +117,27 @@ const Utils = {
   },
 
   formatDate(dateStr) {
-    return new Date(dateStr).toLocaleDateString('en-IN', {
+    if (!dateStr || dateStr === 'None') return 'N/A';
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return 'N/A';
+    return d.toLocaleDateString('en-IN', {
       day: 'numeric', month: 'short', year: 'numeric'
     });
   },
   formatMonthName(monthStr) {
     // Input format: "2026-01" or similar
+    if (!monthStr || monthStr === 'None') return 'N/A';
     const [year, month] = monthStr.split('-').map(Number);
     const date = new Date(year, month - 1);
+    if (isNaN(date.getTime())) return 'N/A';
     return date.toLocaleString('en-IN', { month: 'short' });
   },
   formatDateRelative(dateStr) {
-    const diff = Date.now() - new Date(dateStr).getTime();
+    if (!dateStr || dateStr === 'None') return 'Recently';
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return 'Recently';
+    
+    const diff = Date.now() - d.getTime();
     const days = Math.floor(diff / 86400000);
     const absDays = Math.abs(days);
 
@@ -257,8 +200,7 @@ const Icons = {
   alert: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>`,
   arrowRight: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`,
   arrowLeft: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>`,
-  moon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`,
-  sun: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`,
+
   trending: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
   pie: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>`,
   calendar: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>`,
@@ -553,41 +495,17 @@ function initKeyboardShortcuts() {
       const bell = document.querySelector('.notification-center .dropdown-toggle');
       if (bell) bell.click();
     }
-    // Ctrl/Cmd + D → toggle dark mode
-    if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
-      e.preventDefault();
-      Theme.toggle();
-      Toast.info(`Switched to ${Theme.get()} mode`);
-    }
+
   });
 
-  // Theme toggle button click listener
-  document.addEventListener('click', (e) => {
-    const themeBtn = e.target.closest('.theme-toggle-btn');
-    if (themeBtn) {
-      e.preventDefault();
-      const currentTheme = Theme.get();
-      Theme.toggle();
-      const newTheme = Theme.get();
 
-      // Animate the button icon
-      themeBtn.style.transform = 'rotate(360deg) scale(0)';
-      setTimeout(() => {
-        themeBtn.style.transform = '';
-      }, 400);
-
-      if (currentTheme !== newTheme) {
-        Toast.info(`${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)} mode enabled`);
-      }
-    }
-  });
 }
 
 /* ── Global Init ── */
 document.addEventListener('DOMContentLoaded', () => {
   if (!Auth.guard()) return; // Stop if redirecting
 
-  Theme.init();
+
 
   Modal.init();
   Sidebar.init();

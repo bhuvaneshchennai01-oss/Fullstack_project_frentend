@@ -190,7 +190,7 @@ function renderPaymentTimeline(payments) {
       <div class="timeline-item">
         <div class="timeline-dot ${pay.type !== 'EMI' ? 'success' : ''}"></div>
         <div class="timeline-content">
-          <div class="timeline-date">${Utils.formatDate(pay.date)}</div>
+          <div class="timeline-date">${Utils.formatDate(pay.paid_on)}</div>
           <div style="display:flex; justify-content:space-between; align-items:center; gap:var(--space-4);">
             <div style="flex:1;">
               <strong style="font-size:var(--text-sm);">${Utils.formatCurrency(pay.amount)}</strong>
@@ -205,6 +205,8 @@ function renderPaymentTimeline(payments) {
       </div>`;
   });
 
+
+  
   container.innerHTML = html;
   container.querySelectorAll('[data-icon]').forEach(el => el.innerHTML = getIcon(el.dataset.icon));
 }
@@ -328,7 +330,7 @@ function initPaymentModal(person) {
         const user = getCurrentUser();
         await API.payments.create(user.id, {
           person_id: parseInt(person.id),
-          amount, date: dateValue, type, note, status: 'paid'
+          amount, paid_on: dateValue, type, note, status: 'paid'
         });
         Modal.close('paymentModal');
         Toast.success('Payment recorded!');

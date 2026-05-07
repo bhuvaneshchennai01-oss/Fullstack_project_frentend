@@ -180,7 +180,7 @@ async function loadRecentActivity(userId) {
     let html = '';
     for (const pay of payments) {
       const name = pay.person_name || 'Borrower';
-      const date = Utils.formatDateRelative(pay.date);
+      const date = Utils.formatDateRelative(pay.paid_on);
 
       html += `
         <div class="activity-item ripple" onclick="window.location.href='person-detail.html?id=${pay.person_id}'">

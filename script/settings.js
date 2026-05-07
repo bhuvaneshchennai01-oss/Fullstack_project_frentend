@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function initSettings() {
     initSettingsNav();
     await loadProfileSettings();
-    initThemeToggle();
+
     await initPreferences();
     initSecurity();
     initDangerZone();
@@ -143,28 +143,7 @@ async function loadProfileSettings() {
     }
 }
 
-// ── Theme Toggle Section ──
-function initThemeToggle() {
-    const radios = document.querySelectorAll('input[name="ui_theme"]');
-    const currentTheme = Theme.get();
 
-    radios.forEach(radio => {
-        if (radio.value === currentTheme) {
-            radio.checked = true;
-            radio.closest('.theme-option')?.classList.add('active');
-        }
-
-        radio.addEventListener('change', () => {
-            document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
-            radio.closest('.theme-option')?.classList.add('active');
-
-            if (Theme.get() !== radio.value) {
-                Theme.toggle();
-                Toast.info(`Switched to ${radio.value} mode`);
-            }
-        });
-    });
-}
 
 // ── Preferences Section ──
 async function initPreferences() {

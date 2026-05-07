@@ -145,9 +145,7 @@
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
-[data-theme="dark"] .card-header {
-    background: rgba(255, 255, 255, 0.02);
-}
+
 
 .card-header h3 {
     margin: 0;
@@ -244,9 +242,7 @@
     flex: 1;
 }
 
-[data-theme="dark"] .stat-card .stat-value {
-    color: var(--primary-400);
-}
+
 
 .stat-card .stat-trend {
     display: flex;
@@ -274,21 +270,7 @@
     border-color: var(--danger-100);
 }
 
-[data-theme="dark"] .stat-card .stat-trend {
-    background: rgba(255, 255, 255, 0.03);
-}
 
-[data-theme="dark"] .stat-card .stat-trend.up {
-    color: var(--success-400);
-    background: rgba(34, 197, 94, 0.1);
-    border-color: rgba(34, 197, 94, 0.2);
-}
-
-[data-theme="dark"] .stat-card .stat-trend.down {
-    color: var(--danger-400);
-    background: rgba(239, 68, 68, 0.1);
-    border-color: rgba(239, 68, 68, 0.2);
-}
 
 /* Increased gap between value and sub-label */
 .stat-card:hover {
@@ -1133,47 +1115,7 @@
     transform: translateY(-4px) scaleX(1.1);
 }
 
-.theme-toggle-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-full);
-    background: var(--surface-1);
-    color: var(--text-secondary);
-    font-size: 1.25rem;
-    transition: all 0.4s var(--ease-spring);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid transparent;
-}
 
-.theme-toggle-btn:hover {
-    transform: rotate(15deg) scale(1.1);
-    background: var(--surface-2);
-    border-color: var(--primary-200);
-}
-
-.theme-toggle-btn:active {
-    transform: scale(0.9);
-}
-
-[data-theme="dark"] .theme-toggle-btn {
-    color: hsl(45, 100%, 60%);
-    background: rgba(255, 235, 59, 0.1);
-}
-
-[data-theme="dark"] .theme-toggle-btn:hover {
-    box-shadow: 0 0 25px rgba(255, 235, 59, 0.3), inset 0 0 8px rgba(255, 235, 59, 0.2);
-    border-color: rgba(255, 235, 59, 0.4);
-}
-
-.theme-toggle-btn [data-icon] {
-    transition: transform 0.4s var(--ease-spring);
-}
-
-.theme-toggle-btn:hover [data-icon] {
-    transform: scale(1.15) rotate(-15deg);
-}
 
 .chart-bar {
     width: 100%;
@@ -1310,12 +1252,7 @@
     animation: skeleton-shimmer 1.6s infinite;
 }
 
-[data-theme="dark"] .skeleton::after {
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(255, 255, 255, 0.04),
-            transparent);
-}
+
 
 @keyframes skeleton-shimmer {
     100% {
@@ -1554,9 +1491,7 @@
     border-left: 3px solid var(--primary-500);
 }
 
-[data-theme="dark"] .notification-item.unread {
-    background: rgba(79, 70, 229, 0.08);
-}
+
 
 .notification-item.unread::after {
     content: '';

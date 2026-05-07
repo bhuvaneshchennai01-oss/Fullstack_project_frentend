@@ -1,166 +1,89 @@
-/* ============================================
-   FinSmart – Add Borrower Form Logic
-============================================ */
-
-'use strict';
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    if (!Auth.guard()) {
-        return;
-    }
-
+document.addEventListener("DOMContentLoaded", function () {
     initAddPersonForm();
 });
 
-
 function initAddPersonForm() {
 
-    var form = document.getElementById('addPersonForm');
+    var form = document.getElementById("addPersonForm");
     if (!form) return;
 
     var user = getCurrentUser();
     if (!user) return;
 
-    // Input elements
-    var loanInput = document.getElementById('personLoanAmount');
-    var interestInput = document.getElementById('personInterestRate');
-    var durationInput = document.getElementById('personDuration');
-    var phoneInput = document.getElementById('personPhone');
+    var loanInput = document.getElementById("personLoanAmount");
+    var interestInput = document.getElementById("personInterestRate");
+    var durationInput = document.getElementById("personDuration");
+    var phoneInput = document.getElementById("personPhone");
 
 
     /* =========================
-       1. PHONE VALIDATION
+       PHONE VALIDATION
     ========================== */
-    phoneInput.addEventListener('input', function (e) {
-
-        var value = e.target.value;
-
-        // Remove non-digits
-        value = value.replace(/[^0-9]/g, '');
-
-        if (value.length > 10) {
-            value = value.substring(0, 10);
-        }
-
-        e.target.value = value;
+    phoneInput.addEventListener("input", function (e) {
+        e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 10);
     });
 
 
     /* =========================
-       2. CALCULATION LOGIC
-    ========================== */
-
+       CALCULATION
+    ==========================h */
     function updateCalculations() {
 
         var amount = parseFloat(loanInput.value) || 0;
         var rate = parseFloat(interestInput.value) || 0;
-        var mode = 'per_100';
-        var type = 'monthly';
-        var durationCycles = parseInt(durationInput.value) || 12;
+        var months = parseInt(durationInput.value) || 12;
 
-        var periodAmountEl = document.getElementById('calcMonthly');
-        var durationTotalEl = document.getElementById('calcYearly');
-        var totalEl = document.getElementById('calcTotal');
+        var perPeriod = (amount / 100) * rate;
+        var totalInterest = perPeriod * months;
+        var total = amount + totalInterest;
 
-        // Labels are fixed now
-        var periodInterest = (amount / 100) * rate;
-        var totalInterest = periodInterest * durationCycles;
-        var totalMaturity = amount + totalInterest;
+        setText("calcMonthly", Utils.formatCurrency(perPeriod));
+        setText("calcYearly", Utils.formatCurrency(totalInterest));
+        setText("calcTotal", Utils.formatCurrency(total));
+    }
 
-        if (periodAmountEl) {
-            periodAmountEl.textContent = Utils.formatCurrency(periodInterest);
-        }
-
-        if (durationTotalEl) {
-            durationTotalEl.textContent = Utils.formatCurrency(totalInterest);
-        }
-
-        if (totalEl) {
-            totalEl.textContent = Utils.formatCurrency(totalMaturity);
-        }
+    function setText(id, value) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = value;
     }
 
 
-    // Attach calculation events
-    var inputs = [loanInput, interestInput, durationInput];
-
-    for (var i = 0; i < inputs.length; i++) {
-        if (inputs[i]) {
-            inputs[i].addEventListener('input', updateCalculations);
-            inputs[i].addEventListener('change', updateCalculations);
-        }
-    }
+    [loanInput, interestInput, durationInput].forEach(function (el) {
+        if (!el) return;
+        el.addEventListener("input", updateCalculations);
+        el.addEventListener("change", updateCalculations);
+    });
 
 
     /* =========================
-       3. FORM SUBMIT
+       FORM SUBMIT
     ========================== */
-
-    form.addEventListener('submit', async function (e) {
-
+    form.addEventListener("submit", async function (e) {
         e.preventDefault();
 
         clearFormErrors(form);
 
         var data = {
-            name: getValue('personName'),
-            phone: getValue('personPhone'),
-            email: getValue('personEmail'),
-            address: getValue('personAddress'),
-            given_amount: parseFloat(getValue('personLoanAmount')) || 0,
-            interest_amount: parseFloat(getValue('personInterestRate')) || 0,
-            interest_type: 'monthly',
-            interest_mode: 'per_100',
-            start_date: getValue('personStartDate') || null,
-            duration: parseInt(getValue('personDuration')) || 12,
-            notes: getValue('personNotes')
+            name: getVal("personName"),
+            phone: getVal("personPhone"),
+            email: getVal("personEmail"),
+            address: getVal("personAddress"),
+            given_amount: parseFloat(getVal("personLoanAmount")) || 0,
+            interest_amount: parseFloat(getVal("personInterestRate")) || 0,
+            interest_type: "monthly",
+            interest_mode: "per_100",
+            start_date: getVal("personStartDate") || null,
+            duration: parseInt(getVal("personDuration")) || 12,
+            notes: getVal("personNotes")
         };
 
-        var valid = true;
-
-        if (!data.name || data.name.length < 2) {
-            showFieldError('personName', 'Name is required');
-            valid = false;
-        }
-
-        if (!data.phone || data.phone.length < 10) {
-            showFieldError('personPhone', 'Valid 10-digit phone required');
-            valid = false;
-        }
-
-        if (data.email && !Utils.isValidEmail(data.email)) {
-            showFieldError('personEmail', 'Enter valid email');
-            valid = false;
-        }
-
-        if (!data.given_amount || data.given_amount <= 0) {
-            showFieldError('personLoanAmount', 'Enter valid amount');
-            valid = false;
-        }
-
-        if (!data.interest_amount || data.interest_amount < 0) {
-            showFieldError('personInterestRate', 'Enter valid interest');
-            valid = false;
-        }
-
-        if (!data.start_date) {
-            showFieldError('personStartDate', 'Start date required');
-            valid = false;
-        }
-
-        if (!data.duration || data.duration < 1) {
-            showFieldError('personDuration', 'Duration required');
-            valid = false;
-        }
-
+        var valid = validate(data);
         if (!valid) return;
 
-        var btn = form.querySelector('.btn-primary');
+        var btn = form.querySelector(".btn-primary");
         setButtonLoading(btn, true);
 
         try {
-
             await API.persons.create(user.id, data);
 
             Toast.success(data.name + " added successfully!");
@@ -169,48 +92,73 @@ function initAddPersonForm() {
                 window.location.href = "persons.html";
             }, 800);
 
-        } catch (error) {
-
+        } catch (err) {
             setButtonLoading(btn, false);
-            Toast.error(error.message || "Failed to add borrower");
+            Toast.error(err.message || "Failed to add borrower");
         }
     });
+
+
+    function validate(d) {
+        var ok = true;
+
+        if (!d.name || d.name.length < 2) {
+            showFieldError("personName", "Name is required");
+            ok = false;
+        }
+
+        if (!d.phone || d.phone.length < 10) {
+            showFieldError("personPhone", "Valid 10-digit phone required");
+            ok = false;
+        }
+
+        if (d.email && !Utils.isValidEmail(d.email)) {
+            showFieldError("personEmail", "Enter valid email");
+            ok = false;
+        }
+
+        if (!d.given_amount || d.given_amount <= 0) {
+            showFieldError("personLoanAmount", "Enter valid amount");
+            ok = false;
+        }
+
+        if (d.interest_amount < 0) {
+            showFieldError("personInterestRate", "Enter valid interest");
+            ok = false;
+        }
+
+        if (!d.start_date) {
+            showFieldError("personStartDate", "Start date required");
+            ok = false;
+        }
+
+        if (!d.duration || d.duration < 1) {
+            showFieldError("personDuration", "Duration required");
+            ok = false;
+        }
+
+        return ok;
+    }
+
+
+    function getVal(id) {
+        var el = document.getElementById(id);
+        return el ? el.value.trim() : "";
+    }
 
 
     /* =========================
        DEFAULT VALUES
     ========================== */
-
-    var dateInput = document.getElementById('personStartDate');
+    var dateInput = document.getElementById("personStartDate");
     if (dateInput && !dateInput.value) {
-        var today = new Date();
-        dateInput.value = today.toISOString().split('T')[0];
+        dateInput.value = new Date().toISOString().split("T")[0];
     }
 
-    var settings = DB.get('settings');
-
-    if (settings) {
-
-        if (interestInput && !interestInput.value && settings.defaultInterest) {
-            interestInput.value = settings.defaultInterest;
-        }
+    var settings = DB.get("settings");
+    if (settings && interestInput && !interestInput.value) {
+        interestInput.value = settings.defaultInterest || "";
     }
 
     updateCalculations();
-}
-
-
-/* =========================
-   HELPER
-========================== */
-
-function getValue(id) {
-
-    var el = document.getElementById(id);
-
-    if (el) {
-        return el.value.trim();
-    }
-
-    return '';
 }

@@ -298,10 +298,7 @@ html {
         width: auto !important;
     }
 
-    /* Restore Moon/Theme toggle on mobile, just make it fit nicely */
-    .top-bar .theme-toggle-btn {
-        display: flex !important;
-    }
+
 
     /* ─ Sidebar toggle: visible as inline button in top-bar ─ */
     .top-bar .sidebar-toggle {
@@ -474,7 +471,7 @@ html {
     }
 
     .landing-nav-links,
-    .landing-nav-actions .btn:not(.theme-toggle-btn) {
+    .landing-nav-actions .btn {
         display: none !important;
     }
 
@@ -491,9 +488,7 @@ html {
         color: var(--text-primary) !important;
     }
 
-    .landing-nav.open .theme-toggle-btn {
-        color: var(--text-secondary) !important;
-    }
+
 
     .landing-nav.open .landing-nav-links {
         display: flex !important;
@@ -509,7 +504,7 @@ html {
         font-size: var(--text-lg);
     }
 
-    .landing-nav.open .landing-nav-actions .btn:not(.theme-toggle-btn) {
+    .landing-nav.open .landing-nav-actions .btn {
         display: flex !important;
         width: 100%;
         justify-content: center;
@@ -699,10 +694,7 @@ html {
         box-shadow: var(--shadow-sm) !important;
     }
 
-    [data-theme="dark"] .stat-card {
-        background: rgba(30, 41, 59, 0.7) !important;
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    }
+
 
     .stat-card .stat-header {
         padding: 0 !important;
@@ -751,10 +743,7 @@ html {
         border-bottom: 1px solid var(--border-light);
     }
 
-    [data-theme="dark"] .page-hero {
-        background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, var(--surface-1) 100%) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
+
 
     .dash-greeting {
         font-size: clamp(1.8rem, 8vw, 2.4rem) !important;
@@ -801,34 +790,7 @@ html {
         width: 100%;
     }
 
-    /* ─ Staggered Entrance Animation ─ */
-    .stagger-children>* {
-        animation: fadeInUp 0.5s var(--ease-out) both;
-    }
 
-    .stagger-children>*:nth-child(1) {
-        animation-delay: 0.1s;
-    }
-
-    .stagger-children>*:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-
-    .stagger-children>*:nth-child(3) {
-        animation-delay: 0.3s;
-    }
-
-    .stagger-children>*:nth-child(4) {
-        animation-delay: 0.4s;
-    }
-
-    .stagger-children>*:nth-child(5) {
-        animation-delay: 0.5s;
-    }
-
-    .stagger-children>*:nth-child(6) {
-        animation-delay: 0.6s;
-    }
 
     /* ─ All grids → single column ─ */
     .tabs {

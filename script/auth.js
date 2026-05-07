@@ -1,9 +1,16 @@
 /* ============================================
    FinSmart – Authentication Logic
-   Simplified Beginner Version
+   Clean & Fixed Version
 ============================================ */
 
 'use strict';
+
+
+/* =========================
+   AUTH CORE
+   Note: Auth, DB, Utils, Toast, getCurrentUser are all defined in app.js
+   which is loaded before this script. Do NOT redefine them here.
+========================= */
 
 
 /* =========================
@@ -36,10 +43,7 @@ function initLogin() {
         var password = form.querySelector('#loginPassword').value;
 
         var rememberCheckbox = form.querySelector('#rememberMe');
-        var rememberMe = false;
-        if (rememberCheckbox) {
-            rememberMe = rememberCheckbox.checked;
-        }
+        var rememberMe = rememberCheckbox ? rememberCheckbox.checked : false;
 
         clearFormErrors(form);
 
@@ -94,7 +98,8 @@ function initLogin() {
                 console.warn('Settings cache failed');
             }
 
-            Toast.success('Welcome back, ' + userDataFromAPI.name);
+            Toast.success('Welcome back, ' + userData.name);
+
             setTimeout(function () {
                 window.location.href = 'dashboard.html';
             }, 800);
@@ -105,9 +110,6 @@ function initLogin() {
             Toast.error(error.message || 'Invalid login');
         }
     });
-
-
-    
 }
 
 
@@ -143,10 +145,7 @@ function initSignup() {
         var confirmPassword = form.querySelector('#signupConfirmPassword').value;
 
         var termsCheckbox = form.querySelector('#termsAgree');
-        var termsAgree = false;
-        if (termsCheckbox) {
-            termsAgree = termsCheckbox.checked;
-        }
+        var termsAgree = termsCheckbox ? termsCheckbox.checked : false;
 
         clearFormErrors(form);
 
@@ -202,6 +201,7 @@ function initSignup() {
             });
 
             Toast.success('Account created!');
+
             setTimeout(function () {
                 window.location.href = 'setup.html';
             }, 800);
@@ -212,7 +212,6 @@ function initSignup() {
             Toast.error(error.message || 'Signup failed');
         }
     });
-
 
     var socialBtns = form.querySelectorAll('.social-login .btn');
 
@@ -229,6 +228,7 @@ function initSignup() {
 ========================= */
 
 function initSetup() {
+
     var wizard = document.querySelector('.setup-card');
     if (!wizard) return;
 
@@ -236,40 +236,32 @@ function initSetup() {
     var totalSteps = 3;
 
     function showStep(step) {
-        // Toggle steps visibility
+
         var steps = document.querySelectorAll('.setup-step');
+
         for (var i = 0; i < steps.length; i++) {
             steps[i].classList.remove('active');
         }
 
         var target = document.querySelector('.setup-step[data-step="' + step + '"]');
-        if (target) {
-            target.classList.add('active');
-        }
+        if (target) target.classList.add('active');
 
-        // Update progress indicators (wizard steps)
         var wizardSteps = document.querySelectorAll('.wizard-step');
         var connectors = document.querySelectorAll('.wizard-connector');
 
         for (var i = 0; i < wizardSteps.length; i++) {
-            var stepNum = i + 1;
-            var wStep = wizardSteps[i];
 
-            wStep.classList.remove('active', 'completed');
+            wizardSteps[i].classList.remove('active', 'completed');
 
-            if (stepNum === step) {
-                wStep.classList.add('active');
-            } else if (stepNum < step) {
-                wStep.classList.add('completed');
+            if (i + 1 === step) {
+                wizardSteps[i].classList.add('active');
+            } else if (i + 1 < step) {
+                wizardSteps[i].classList.add('completed');
             }
         }
 
         for (var j = 0; j < connectors.length; j++) {
-            var connNum = j + 1;
-            connectors[j].classList.remove('completed');
-            if (connNum < step) {
-                connectors[j].classList.add('completed');
-            }
+            connectors[j].classList.toggle('completed', j + 1 < step);
         }
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -278,18 +270,23 @@ function initSetup() {
     var nextBtns = document.querySelectorAll('.setup-next');
     for (var i = 0; i < nextBtns.length; i++) {
         nextBtns[i].addEventListener('click', function () {
-            if (currentStep < totalSteps) {
-                if (currentStep === 1) {
-                    var biz = document.getElementById('setupBusiness').value.trim();
-                    if (!biz) {
-                        Toast.warning('Please enter your business name');
-                        var input = document.getElementById('setupBusiness');
-                        input.classList.add('error');
-                        input.focus();
-                        return;
-                    }
-                    document.getElementById('setupBusiness').classList.remove('error');
+
+            if (currentStep === 1) {
+
+                var biz = document.getElementById('setupBusiness').value.trim();
+                var input = document.getElementById('setupBusiness');
+
+                if (!biz) {
+                    Toast.warning('Please enter your business name');
+                    input.classList.add('error');
+                    input.focus();
+                    return;
                 }
+
+                input.classList.remove('error');
+            }
+
+            if (currentStep < totalSteps) {
                 currentStep++;
                 showStep(currentStep);
             }
@@ -307,16 +304,19 @@ function initSetup() {
     }
 
     var finishBtn = document.querySelector('.setup-finish');
+
     if (finishBtn) {
         finishBtn.addEventListener('click', async function () {
+
             var business = document.getElementById('setupBusiness').value.trim();
             var bizType = document.getElementById('setupType').value;
             var currency = document.getElementById('setupCurrency').value;
             var interest = document.getElementById('setupInterest').value;
 
             var user = getCurrentUser();
+
             if (!user) {
-                Toast.error('Session expired. Please login again.');
+                Toast.error('Session expired');
                 window.location.href = 'login.html';
                 return;
             }
@@ -324,13 +324,12 @@ function initSetup() {
             setButtonLoading(finishBtn, true);
 
             try {
-                // Update profile with business info
-                var updatedUser = await API.auth.updateProfile(user.id, {
+
+                await API.auth.updateProfile(user.id, {
                     business_name: business,
                     business_type: bizType
                 });
 
-                // Update lending preferences
                 await API.settings.update(user.id, {
                     currency: currency,
                     default_interest_rate: parseFloat(interest) || 2,
@@ -338,7 +337,6 @@ function initSetup() {
                     default_interest_type: 'monthly'
                 });
 
-                // Update local storage
                 DB.set('user', {
                     id: user.id,
                     name: user.name,
@@ -353,16 +351,15 @@ function initSetup() {
                     defaultType: 'monthly'
                 });
 
-                Toast.success('Profile and preferences saved!');
+                Toast.success('Setup completed!');
 
-                // Add a small delay for the toast
                 setTimeout(function () {
                     window.location.href = 'dashboard.html';
                 }, 1000);
 
             } catch (error) {
                 setButtonLoading(finishBtn, false);
-                Toast.error(error.message || 'Failed to complete setup');
+                Toast.error(error.message || 'Setup failed');
             }
         });
     }
@@ -377,15 +374,9 @@ function initSetup() {
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    var path = window.location.pathname;
-    var page = path.substring(path.lastIndexOf('/') + 1);
+    var page = window.location.pathname.split('/').pop();
 
     if (page === 'login.html') initLogin();
     if (page === 'signup.html') initSignup();
     if (page === 'setup.html') initSetup();
 });
-
-
-
-
-

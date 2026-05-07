@@ -167,10 +167,7 @@
     color: var(--primary-600);
 }
 
-[data-theme="dark"] .nav-link.active {
-    background: rgba(79, 70, 229, 0.12);
-    color: var(--primary-300);
-}
+
 
 .nav-link .nav-icon {
     width: 20px;
